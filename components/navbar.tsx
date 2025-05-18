@@ -77,6 +77,13 @@ export default function Navbar() {
     }
   }, [isOpen, setIsOpen])
 
+  const announceMenuState = (isOpen: boolean) => {
+    const statusElement = document.getElementById("navigation-status")
+    if (statusElement) {
+      statusElement.textContent = isOpen ? "Menu de navegação aberto" : "Menu de navegação fechado"
+    }
+  }
+
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isOpen) {
@@ -90,6 +97,9 @@ export default function Navbar() {
       document.addEventListener("touchstart", handleTouchStart)
       document.addEventListener("touchmove", handleTouchMove)
       document.addEventListener("touchend", handleTouchEnd)
+
+      // Announce menu state change
+      announceMenuState(true)
     } else {
       // Restore the scroll position
       const scrollY = document.body.style.top
@@ -102,6 +112,9 @@ export default function Navbar() {
       document.removeEventListener("touchstart", handleTouchStart)
       document.removeEventListener("touchmove", handleTouchMove)
       document.removeEventListener("touchend", handleTouchEnd)
+
+      // Announce menu state change
+      announceMenuState(false)
     }
 
     return () => {
@@ -163,6 +176,8 @@ export default function Navbar() {
         scrolled ? "border-border/40 bg-background/95 shadow-sm" : "border-transparent bg-background/50",
         hideNavbar ? "-translate-y-full" : "translate-y-0",
       )}
+      role="banner"
+      aria-label="Site navigation"
     >
       <div className="container flex h-14 max-w-screen-2xl items-center justify-between relative">
         <FadeIn duration="fast">
@@ -187,6 +202,8 @@ export default function Navbar() {
         <nav
           className="hidden md:flex mx-auto items-center justify-center space-x-8 text-sm font-medium"
           aria-label="Principal"
+          role="navigation"
+          id="desktop-navigation"
         >
           {navItems
             .filter((item) => !item.mobileOnly) // Exclude mobile-only items
@@ -239,6 +256,7 @@ export default function Navbar() {
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
             aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+            aria-haspopup="true"
             data-menu-button
           >
             <HamburgerMenuIcon isOpen={isOpen} />
@@ -252,6 +270,7 @@ export default function Navbar() {
             isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
           )}
           aria-hidden="true"
+          role="presentation"
           onClick={() => setIsOpen(false)}
         />
 
@@ -264,9 +283,15 @@ export default function Navbar() {
             isOpen ? "translate-x-0" : "translate-x-full",
             "flex flex-col h-[100dvh]", // Use dynamic viewport height for better mobile support
           )}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="mobile-menu-title"
           data-mobile-menu
         >
           <div className="flex flex-col h-full">
+            <span id="mobile-menu-title" className="sr-only">
+              Menu de navegação
+            </span>
             <div className="flex items-center justify-between p-5 border-b">
               <Link
                 href="/"
@@ -289,17 +314,28 @@ export default function Navbar() {
                 className="flex items-center justify-center w-12 h-12 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary touch-manipulation"
                 onClick={() => setIsOpen(false)}
                 aria-label="Fechar menu"
+                aria-controls="mobile-menu"
               >
                 <HamburgerMenuIcon isOpen={true} />
               </button>
             </div>
 
-            <nav className="flex-1 overflow-y-auto p-5 overscroll-contain" aria-label="Menu mobile">
-              <ul className="space-y-4">
+            <nav
+              className="flex-1 overflow-y-auto p-5 overscroll-contain"
+              aria-label="Menu mobile"
+              role="navigation"
+              id="mobile-navigation"
+            >
+              <ul className="space-y-4" role="menu">
                 {navItems.map((item, index) => {
                   const isActive = activeSection === item.href.substring(1)
                   return (
-                    <li key={index} className="menu-item-appear" style={{ animationDelay: `${index * 100}ms` }}>
+                    <li
+                      key={index}
+                      className="menu-item-appear"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                      role="none"
+                    >
                       <a
                         href={item.href}
                         className={cn(
@@ -313,6 +349,7 @@ export default function Navbar() {
                           handleNavClick(item.href.substring(1), item.href)
                         }}
                         aria-current={isActive ? "page" : undefined}
+                        role="menuitem"
                       >
                         <span className="text-lg font-medium">{item.label}</span>
                         <ArrowRight className={cn("h-5 w-5", isActive ? "text-primary" : "opacity-70")} />
@@ -323,7 +360,7 @@ export default function Navbar() {
               </ul>
             </nav>
 
-            <div className="p-5 border-t mt-auto">
+            <div className="p-5 border-t mt-auto" role="complementary" aria-label="Contato">
               <a
                 href="mailto:contato@spinova.solutions"
                 onClick={(e) => {
@@ -332,6 +369,8 @@ export default function Navbar() {
                   handleContactClick()
                 }}
                 className="flex items-center justify-center w-full py-4 px-5 rounded-md bg-white text-black hover:bg-gray-100 transition-colors touch-manipulation"
+                role="button"
+                aria-label="Enviar email para contato@spinova.solutions"
               >
                 <span className="font-medium text-lg">Entre em contato</span>
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -339,6 +378,9 @@ export default function Navbar() {
             </div>
           </div>
         </div>
+      </div>
+      <div aria-live="polite" className="sr-only" id="navigation-status">
+        {isOpen ? "Menu de navegação aberto" : "Menu de navegação fechado"}
       </div>
     </header>
   )
