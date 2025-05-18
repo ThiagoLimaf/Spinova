@@ -151,7 +151,7 @@ export default function Navbar() {
         hideNavbar ? "-translate-y-full" : "translate-y-0",
       )}
     >
-      <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
+      <div className="container flex h-14 max-w-screen-2xl items-center justify-between relative">
         <FadeIn duration="fast">
           <Link
             href="/"
@@ -246,14 +246,14 @@ export default function Navbar() {
           id="mobile-menu"
           ref={mobileMenuRef}
           className={cn(
-            "fixed inset-y-0 right-0 z-50 w-full max-w-xs bg-background shadow-xl md:hidden transition-transform duration-300 ease-in-out overscroll-contain",
+            "fixed inset-y-0 right-0 z-50 w-full sm:max-w-sm bg-background shadow-xl md:hidden transition-transform duration-300 ease-in-out overscroll-contain",
             isOpen ? "translate-x-0" : "translate-x-full",
             "flex flex-col", // Add this to ensure proper flex layout
           )}
           data-mobile-menu
         >
           <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between p-4 border-b">
+            <div className="flex items-center justify-between p-5 border-b">
               <Link
                 href="/"
                 className="flex items-center space-x-2 touch-manipulation"
@@ -280,7 +280,7 @@ export default function Navbar() {
               </button>
             </div>
 
-            <nav className="flex-1 overflow-y-auto p-4 overscroll-contain" aria-label="Menu mobile">
+            <nav className="flex-1 overflow-y-auto p-5 overscroll-contain" aria-label="Menu mobile">
               <ul className="space-y-4">
                 {navItems
                   .filter((item) => !item.mobileOnly === false)
@@ -291,7 +291,7 @@ export default function Navbar() {
                         <a
                           href={item.href}
                           className={cn(
-                            "flex items-center justify-between py-4 px-4 rounded-md transition-colors touch-manipulation",
+                            "flex items-center justify-between py-4 px-5 rounded-md transition-colors touch-manipulation text-lg",
                             isActive
                               ? "bg-primary/10 text-primary font-medium"
                               : "hover:bg-gray-100/10 text-foreground/80",
@@ -302,8 +302,8 @@ export default function Navbar() {
                           }}
                           aria-current={isActive ? "page" : undefined}
                         >
-                          <span className="text-lg">{item.label}</span>
-                          <ArrowRight className={cn("h-4 w-4", isActive ? "text-primary" : "opacity-70")} />
+                          <span className="text-lg font-medium">{item.label}</span>
+                          <ArrowRight className={cn("h-5 w-5", isActive ? "text-primary" : "opacity-70")} />
                         </a>
                       </li>
                     )
@@ -311,7 +311,7 @@ export default function Navbar() {
               </ul>
             </nav>
 
-            <div className="p-4 border-t mt-auto">
+            <div className="p-5 border-t mt-auto">
               <a
                 href="mailto:contato@spinova.solutions"
                 onClick={(e) => {
@@ -319,10 +319,10 @@ export default function Navbar() {
                   window.location.href = "mailto:contato@spinova.solutions"
                   handleContactClick()
                 }}
-                className="flex items-center justify-center w-full py-4 px-4 rounded-md bg-white text-black hover:bg-gray-100 transition-colors touch-manipulation"
+                className="flex items-center justify-center w-full py-4 px-5 rounded-md bg-white text-black hover:bg-gray-100 transition-colors touch-manipulation"
               >
-                <span className="font-medium">Entre em contato</span>
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <span className="font-medium text-lg">Entre em contato</span>
+                <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </div>
           </div>
