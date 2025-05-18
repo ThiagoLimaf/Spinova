@@ -11,6 +11,7 @@ import { HamburgerMenuIcon } from "./hamburger-menu-icon"
 import { useActiveSection } from "./active-section-observer"
 import { scrollToSection } from "@/utils/scroll-utils"
 import { useMobileMenu } from "./mobile-menu-provider"
+import { FadeIn } from "./animations/fade-in"
 
 // Navigation items
 const navItems = [
@@ -148,52 +149,55 @@ export default function Navbar() {
       )}
     >
       <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
-        <Link
-          href="/"
-          className="flex items-center space-x-2 touch-manipulation"
-          aria-label="Spinova - Página inicial"
-          onClick={() => trackEvent("logo_click")}
-        >
-          <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Spinova%20extented%20white%20logo-quepSGTq5FZuyDy7EPwkwm4aHsnR0r.png"
-            alt="Spinova Logo"
-            width={120}
-            height={30}
-            className="h-8 w-auto"
-            priority
-          />
-        </Link>
+        <FadeIn duration="fast">
+          <Link
+            href="/"
+            className="flex items-center space-x-2 touch-manipulation"
+            aria-label="Spinova - Página inicial"
+            onClick={() => trackEvent("logo_click")}
+          >
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Spinova%20extented%20white%20logo-quepSGTq5FZuyDy7EPwkwm4aHsnR0r.png"
+              alt="Spinova Logo"
+              width={120}
+              height={30}
+              className="h-8 w-auto"
+              priority
+            />
+          </Link>
+        </FadeIn>
 
         {/* Desktop Navigation */}
         <nav
           className="hidden md:flex mx-auto items-center justify-center space-x-8 text-sm font-medium"
           aria-label="Principal"
         >
-          {navItems.map((item) => {
+          {navItems.map((item, index) => {
             const isActive = activeSection === item.href.substring(1)
             return (
-              <a
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "transition-colors hover:text-primary relative py-1 px-1",
-                  isActive ? "text-primary font-semibold" : "text-foreground/80",
-                )}
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleNavClick(item.href.substring(1), item.href)
-                }}
-                aria-current={isActive ? "page" : undefined}
-              >
-                {item.label}
-                {isActive && <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full" />}
-              </a>
+              <FadeIn key={item.href} delay={100 + index * 100} duration="fast">
+                <a
+                  href={item.href}
+                  className={cn(
+                    "transition-colors hover:text-primary relative py-1 px-1",
+                    isActive ? "text-primary font-semibold" : "text-foreground/80",
+                  )}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    handleNavClick(item.href.substring(1), item.href)
+                  }}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {item.label}
+                  {isActive && <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full" />}
+                </a>
+              </FadeIn>
             )
           })}
         </nav>
 
         {/* Desktop CTA */}
-        <div className="hidden md:flex items-center">
+        <FadeIn className="hidden md:flex items-center" delay={400} duration="fast">
           <a
             href="mailto:contato@spinova.solutions"
             onClick={(e) => {
@@ -205,19 +209,21 @@ export default function Navbar() {
           >
             <Button size="sm">Entre em contato</Button>
           </a>
-        </div>
+        </FadeIn>
 
         {/* Animated Hamburger Menu Button */}
-        <button
-          className="md:hidden flex items-center justify-center w-12 h-12 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary touch-manipulation"
-          onClick={toggleMenu}
-          aria-expanded={isOpen}
-          aria-controls="mobile-menu"
-          aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
-          data-menu-button
-        >
-          <HamburgerMenuIcon isOpen={isOpen} />
-        </button>
+        <FadeIn className="md:hidden" duration="fast">
+          <button
+            className="flex items-center justify-center w-12 h-12 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary touch-manipulation"
+            onClick={toggleMenu}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
+            aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+            data-menu-button
+          >
+            <HamburgerMenuIcon isOpen={isOpen} />
+          </button>
+        </FadeIn>
 
         {/* Mobile Menu Overlay */}
         <div

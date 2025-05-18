@@ -3,6 +3,7 @@ import Hero from "@/components/hero"
 import Features from "@/components/features"
 import Footer from "@/components/footer"
 import ScrollToTop from "@/components/scroll-to-top"
+import { PageTransition } from "@/components/page-transition"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -14,6 +15,9 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="relative min-h-screen">
+      {/* Page transition animation */}
+      <PageTransition />
+
       {/* Background gradients */}
       <div className="pointer-events-none fixed inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
@@ -24,8 +28,6 @@ export default function Home() {
       <div className="relative z-10">
         <Navbar />
         <main className="pt-14">
-          {" "}
-          {/* Add padding-top to account for fixed navbar */}
           <Hero />
           <Features />
         </main>

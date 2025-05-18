@@ -4,9 +4,11 @@ import { useState, useEffect } from "react"
 import { ArrowUp } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { scrollToTop } from "@/utils/scroll-utils"
+import { useReducedMotion } from "@/hooks/use-reduced-motion"
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -21,6 +23,11 @@ export default function ScrollToTop() {
     window.addEventListener("scroll", toggleVisibility, { passive: true })
     return () => window.removeEventListener("scroll", toggleVisibility)
   }, [])
+
+  // Don't render the button if user prefers reduced motion
+  if (prefersReducedMotion) {
+    return null
+  }
 
   return (
     <button

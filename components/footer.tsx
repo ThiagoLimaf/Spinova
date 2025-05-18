@@ -7,6 +7,7 @@ import Image from "next/image"
 import { Linkedin, Mail } from "lucide-react"
 import { trackEvent } from "@/utils/trackEvent"
 import { scrollToSection } from "@/utils/scroll-utils"
+import { FadeIn } from "./animations/fade-in"
 
 export default function Footer() {
   const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
@@ -17,7 +18,7 @@ export default function Footer() {
 
   return (
     <footer id="contato" className="bg-gray-900 text-white border-t border-gray-800">
-      <div className="container flex flex-col gap-8 py-8 md:flex-row md:py-12 px-4 sm:px-6">
+      <FadeIn className="container flex flex-col gap-8 py-8 md:flex-row md:py-12 px-4 sm:px-6">
         <div className="flex-1 space-y-4">
           <Link href="/" className="inline-block touch-manipulation" aria-label="Voltar para a página inicial">
             <Image
@@ -188,7 +189,7 @@ export default function Footer() {
             </ul>
           </div>
         </nav>
-      </div>
+      </FadeIn>
       <div className="container border-t border-gray-800 py-6 px-4 sm:px-6">
         <p className="text-center text-sm text-gray-400">
           © {new Date().getFullYear()} Spinova. Todos os direitos reservados.

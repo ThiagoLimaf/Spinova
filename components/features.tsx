@@ -3,6 +3,8 @@
 import { Code, Lightbulb, TrendingUp, Award, Handshake, Puzzle, FlaskRound, Target, ArrowRight } from "lucide-react"
 import Image from "next/image"
 import { trackEvent } from "./event-tracking"
+import { FadeIn } from "./animations/fade-in"
+import { StaggerChildren } from "./animations/stagger-children"
 
 const pillars = [
   {
@@ -168,19 +170,19 @@ export default function Features() {
     <>
       {/* Pilares Section */}
       <section id="pilares" className="container space-y-12 sm:space-y-16 py-16 sm:py-24 md:py-32">
-        <div className="mx-auto max-w-[58rem] text-center px-4">
+        <FadeIn className="mx-auto max-w-[58rem] text-center px-4">
           <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">Pilares</h2>
           <p className="mt-4 text-muted-foreground sm:text-lg">
             Combinamos expertise em desenvolvimento de software, inovação e investimentos para impulsionar o crescimento
             do seu negócio.
           </p>
-        </div>
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3 px-4">
+        </FadeIn>
+        <StaggerChildren
+          className="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3 px-4"
+          staggerDelay={150}
+        >
           {pillars.map((pillar) => (
-            <div
-              key={pillar.name}
-              className="relative overflow-hidden rounded-lg border bg-background p-6 sm:p-8 fade-in"
-            >
+            <div key={pillar.name} className="relative overflow-hidden rounded-lg border bg-background p-6 sm:p-8">
               <div className="flex items-center gap-4">
                 <pillar.icon className="h-8 w-8" aria-hidden="true" />
                 <h3 className="font-bold">{pillar.name}</h3>
@@ -188,33 +190,34 @@ export default function Features() {
               <p className="mt-2 text-muted-foreground">{pillar.description}</p>
             </div>
           ))}
-        </div>
+        </StaggerChildren>
       </section>
 
       {/* Benefícios Section */}
       <section id="beneficios" className="container space-y-12 sm:space-y-16 py-16 sm:py-24 md:py-32 bg-gray-50/10">
-        <div className="mx-auto max-w-[58rem] text-center px-4">
+        <FadeIn className="mx-auto max-w-[58rem] text-center px-4">
           <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">Benefícios</h2>
           <p className="mt-4 text-muted-foreground sm:text-lg">
             Descubra como nossa abordagem integrada pode transformar seu negócio
           </p>
-        </div>
+        </FadeIn>
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 px-4">
           {benefits.map((benefit, index) => (
-            <div
+            <FadeIn
               key={benefit.title}
-              className="relative overflow-hidden rounded-lg border bg-background p-6 sm:p-8 shadow-sm transition-all hover:shadow-md fade-in"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className="relative overflow-hidden rounded-lg border bg-background p-6 sm:p-8 shadow-sm transition-all hover:shadow-md"
+              delay={index * 100}
+              duration="medium"
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <benefit.icon className="h-6 w-6 text-primary" aria-hidden="true" />
               </div>
               <h3 className="mb-2 text-xl font-bold">{benefit.title}</h3>
               <p className="text-muted-foreground">{benefit.description}</p>
-            </div>
+            </FadeIn>
           ))}
         </div>
-        <div className="flex justify-center mt-8 sm:mt-12 px-4">
+        <FadeIn className="flex justify-center mt-8 sm:mt-12 px-4" delay={600}>
           <a
             href="mailto:contato@spinova.solutions"
             onClick={(e) => {
@@ -235,7 +238,7 @@ export default function Features() {
               aria-hidden="true"
             />
           </a>
-        </div>
+        </FadeIn>
       </section>
 
       {/* Clientes Section */}
@@ -243,19 +246,22 @@ export default function Features() {
         id="clientes"
         className="container space-y-12 sm:space-y-16 py-16 sm:py-24 md:py-32 bg-gray-900 text-white"
       >
-        <div className="mx-auto max-w-[58rem] text-center px-4">
+        <FadeIn className="mx-auto max-w-[58rem] text-center px-4">
           <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">Clientes</h2>
           <p className="mt-4 text-gray-300 sm:text-lg">
             Empresas e organizações que confiam na Spinova para impulsionar sua transformação digital e inovação
             tecnológica em diversos setores do mercado.
           </p>
-        </div>
-        <div className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 sm:gap-8 md:gap-10 px-4">
-          {clients.map((client, index) => (
+        </FadeIn>
+        <StaggerChildren
+          className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 sm:gap-8 md:gap-10 px-4"
+          staggerDelay={50}
+          initialDelay={300}
+        >
+          {clients.map((client) => (
             <div
               key={client.name}
-              className="flex items-center justify-center p-4 transition-all duration-300 hover:opacity-80 fade-in"
-              style={{ animationDelay: `${index * 50}ms` }}
+              className="flex items-center justify-center p-4 transition-all duration-300 hover:opacity-80"
             >
               <Image
                 src={client.logo || "/placeholder.svg"}
@@ -267,7 +273,7 @@ export default function Features() {
               />
             </div>
           ))}
-        </div>
+        </StaggerChildren>
       </section>
     </>
   )
