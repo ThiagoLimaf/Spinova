@@ -8,8 +8,9 @@ import CookieConsent from "@/components/cookie-consent"
 import GoogleAnalytics from "@/components/google-analytics"
 import { Suspense } from "react"
 import { MobileMenuProvider } from "@/components/mobile-menu-provider"
+import { ActiveSectionProvider } from "@/components/active-section-observer"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"], display: "swap" })
 
 export const metadata: Metadata = {
   title: "Spinova | Instituto de Ciência e Tecnologia",
@@ -29,6 +30,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover",
+  themeColor: "#111827",
   openGraph: {
     title: "Spinova | Instituto de Ciência e Tecnologia",
     description:
@@ -64,6 +67,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  manifest: "/site.webmanifest",
     generator: 'v0.dev'
 }
 
@@ -78,9 +82,14 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#111827" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no"
+        />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
-      <body className={`${inter.className} bg-background text-foreground antialiased`}>
+      <body className={`${inter.className} bg-background text-foreground antialiased mobile-safe-area`}>
         {/* Google Analytics */}
         <Suspense fallback={null}>
           <GoogleAnalytics />
@@ -90,7 +99,9 @@ export default function RootLayout({
           <MouseMoveEffect />
         </Suspense>
 
-        <MobileMenuProvider>{children}</MobileMenuProvider>
+        <ActiveSectionProvider>
+          <MobileMenuProvider>{children}</MobileMenuProvider>
+        </ActiveSectionProvider>
 
         <Suspense fallback={null}>
           <CookieConsent />

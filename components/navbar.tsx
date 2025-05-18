@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
@@ -8,17 +8,46 @@ import { ArrowRight } from "lucide-react"
 import { trackEvent } from "./event-tracking"
 import { cn } from "@/lib/utils"
 import { HamburgerMenuIcon } from "./hamburger-menu-icon"
+import { useActiveSection } from "./active-section-observer"
+import { scrollToSection } from "@/utils/scroll-utils"
+import { useMobileMenu } from "./mobile-menu-provider"
+
+// Navigation items
+const navItems = [
+  { href: "#pilares", label: "Pilares" },
+  { href: "#beneficios", label: "Benefícios" },
+  { href: "#clientes", label: "Clientes" },
+]
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { activeSection } = useActiveSection()
+  const { isOpen, setIsOpen, toggleMenu } = useMobileMenu()
+  const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const lastScrollY = useRef(0)
+  const [hideNavbar, setHideNavbar] = useState(false)
 
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
+      const currentScrollY = window.scrollY
+
+      // Show/hide navbar based on scroll direction
+      if (currentScrollY > 100) {
+        if (currentScrollY > lastScrollY.current) {
+          setHideNavbar(true)
+        } else {
+          setHideNavbar(false)
+        }
+      } else {
+        setHideNavbar(false)
+      }
+
+      lastScrollY.current = currentScrollY
+      setScrolled(currentScrollY > 10)
     }
-    window.addEventListener("scroll", handleScroll)
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -26,29 +55,83 @@ export default function Navbar() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement
-      if (isOpen && !target.closest("[data-mobile-menu]") && !target.closest("[data-menu-button]")) {
+      if (
+        isOpen &&
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(target) &&
+        !target.closest("[data-menu-button]")
+      ) {
         setIsOpen(false)
       }
     }
-    document.addEventListener("click", handleClickOutside)
-    return () => document.removeEventListener("click", handleClickOutside)
-  }, [isOpen])
+
+    if (isOpen) {
+      document.addEventListener("click", handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside)
+    }
+  }, [isOpen, setIsOpen])
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden"
+      // Add touch event listeners for swipe to close
+      document.addEventListener("touchstart", handleTouchStart)
+      document.addEventListener("touchmove", handleTouchMove)
+      document.addEventListener("touchend", handleTouchEnd)
     } else {
       document.body.style.overflow = ""
+      // Remove touch event listeners
+      document.removeEventListener("touchstart", handleTouchStart)
+      document.removeEventListener("touchmove", handleTouchMove)
+      document.removeEventListener("touchend", handleTouchEnd)
     }
+
     return () => {
       document.body.style.overflow = ""
+      document.removeEventListener("touchstart", handleTouchStart)
+      document.removeEventListener("touchmove", handleTouchMove)
+      document.removeEventListener("touchend", handleTouchEnd)
     }
   }, [isOpen])
 
-  const handleNavClick = (section: string) => {
+  // Touch handling for swipe to close
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
+
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchMove = (e: TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    // Swipe right to close menu
+    if (touchStartX.current - touchEndX.current > 100 && isOpen) {
+      setIsOpen(false)
+    }
+  }
+
+  const handleNavClick = (section: string, href: string) => {
     trackEvent("navigation_click", { section })
     setIsOpen(false)
+
+    // Extract the section ID from the href
+    const sectionId = href.startsWith("#") ? href.substring(1) : href
+
+    // Add a small delay on mobile to ensure menu closes first
+    if (window.innerWidth < 768) {
+      setTimeout(() => {
+        scrollToSection(sectionId)
+      }, 300)
+    } else {
+      scrollToSection(sectionId)
+    }
   }
 
   const handleContactClick = () => {
@@ -59,14 +142,15 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full border-b backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-200",
+        "fixed top-0 left-0 right-0 z-50 w-full border-b backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300",
         scrolled ? "border-border/40 bg-background/95 shadow-sm" : "border-transparent bg-background/50",
+        hideNavbar ? "-translate-y-full" : "translate-y-0",
       )}
     >
       <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
         <Link
           href="/"
-          className="flex items-center space-x-2 mobile-touch-target"
+          className="flex items-center space-x-2 touch-manipulation"
           aria-label="Spinova - Página inicial"
           onClick={() => trackEvent("logo_click")}
         >
@@ -85,27 +169,27 @@ export default function Navbar() {
           className="hidden md:flex mx-auto items-center justify-center space-x-8 text-sm font-medium"
           aria-label="Principal"
         >
-          <Link
-            href="#pilares"
-            className="transition-colors hover:text-primary mobile-touch-target"
-            onClick={() => handleNavClick("pilares")}
-          >
-            Pilares
-          </Link>
-          <Link
-            href="#beneficios"
-            className="transition-colors hover:text-primary mobile-touch-target"
-            onClick={() => handleNavClick("beneficios")}
-          >
-            Benefícios
-          </Link>
-          <Link
-            href="#clientes"
-            className="transition-colors hover:text-primary mobile-touch-target"
-            onClick={() => handleNavClick("clientes")}
-          >
-            Clientes
-          </Link>
+          {navItems.map((item) => {
+            const isActive = activeSection === item.href.substring(1)
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "transition-colors hover:text-primary relative py-1 px-1",
+                  isActive ? "text-primary font-semibold" : "text-foreground/80",
+                )}
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleNavClick(item.href.substring(1), item.href)
+                }}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {item.label}
+                {isActive && <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full" />}
+              </a>
+            )
+          })}
         </nav>
 
         {/* Desktop CTA */}
@@ -117,7 +201,7 @@ export default function Navbar() {
               window.location.href = "mailto:contato@spinova.solutions"
               handleContactClick()
             }}
-            className="mobile-touch-target"
+            className="touch-manipulation"
           >
             <Button size="sm">Entre em contato</Button>
           </a>
@@ -125,8 +209,8 @@ export default function Navbar() {
 
         {/* Animated Hamburger Menu Button */}
         <button
-          className="md:hidden flex items-center justify-center w-10 h-10 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary mobile-touch-target"
-          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden flex items-center justify-center w-12 h-12 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary touch-manipulation"
+          onClick={toggleMenu}
           aria-expanded={isOpen}
           aria-controls="mobile-menu"
           aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
@@ -147,8 +231,9 @@ export default function Navbar() {
         {/* Mobile Menu */}
         <div
           id="mobile-menu"
+          ref={mobileMenuRef}
           className={cn(
-            "fixed inset-y-0 right-0 z-50 w-full max-w-xs bg-background shadow-xl md:hidden transition-transform duration-300 ease-in-out",
+            "fixed inset-y-0 right-0 z-50 w-full max-w-xs bg-background shadow-xl md:hidden transition-transform duration-300 ease-in-out overscroll-contain",
             isOpen ? "translate-x-0" : "translate-x-full",
           )}
           data-mobile-menu
@@ -157,7 +242,7 @@ export default function Navbar() {
             <div className="flex items-center justify-between p-4 border-b">
               <Link
                 href="/"
-                className="flex items-center space-x-2 mobile-touch-target"
+                className="flex items-center space-x-2 touch-manipulation"
                 aria-label="Spinova - Página inicial"
                 onClick={() => {
                   trackEvent("logo_click")
@@ -173,7 +258,7 @@ export default function Navbar() {
                 />
               </Link>
               <button
-                className="flex items-center justify-center w-10 h-10 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary mobile-touch-target"
+                className="flex items-center justify-center w-12 h-12 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary touch-manipulation"
                 onClick={() => setIsOpen(false)}
                 aria-label="Fechar menu"
               >
@@ -181,24 +266,32 @@ export default function Navbar() {
               </button>
             </div>
 
-            <nav className="flex-1 overflow-y-auto p-4" aria-label="Menu mobile">
+            <nav className="flex-1 overflow-y-auto p-4 overscroll-contain" aria-label="Menu mobile">
               <ul className="space-y-4">
-                {[
-                  { href: "#pilares", label: "Pilares" },
-                  { href: "#beneficios", label: "Benefícios" },
-                  { href: "#clientes", label: "Clientes" },
-                ].map((item, index) => (
-                  <li key={index} className="menu-item-appear" style={{ animationDelay: `${index * 100}ms` }}>
-                    <Link
-                      href={item.href}
-                      className="flex items-center justify-between py-3 px-4 rounded-md hover:bg-gray-100/10 transition-colors mobile-touch-target"
-                      onClick={() => handleNavClick(item.label.toLowerCase())}
-                    >
-                      <span className="text-lg font-medium">{item.label}</span>
-                      <ArrowRight className="h-4 w-4 opacity-70" />
-                    </Link>
-                  </li>
-                ))}
+                {navItems.map((item, index) => {
+                  const isActive = activeSection === item.href.substring(1)
+                  return (
+                    <li key={index} className="menu-item-appear" style={{ animationDelay: `${index * 100}ms` }}>
+                      <a
+                        href={item.href}
+                        className={cn(
+                          "flex items-center justify-between py-4 px-4 rounded-md transition-colors touch-manipulation",
+                          isActive
+                            ? "bg-primary/10 text-primary font-medium"
+                            : "hover:bg-gray-100/10 text-foreground/80",
+                        )}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          handleNavClick(item.href.substring(1), item.href)
+                        }}
+                        aria-current={isActive ? "page" : undefined}
+                      >
+                        <span className="text-lg">{item.label}</span>
+                        <ArrowRight className={cn("h-4 w-4", isActive ? "text-primary" : "opacity-70")} />
+                      </a>
+                    </li>
+                  )
+                })}
               </ul>
             </nav>
 
@@ -212,7 +305,7 @@ export default function Navbar() {
                   }
                   handleContactClick()
                 }}
-                className="flex items-center justify-center w-full py-3 px-4 rounded-md bg-white text-black hover:bg-gray-100 transition-colors mobile-touch-target"
+                className="flex items-center justify-center w-full py-4 px-4 rounded-md bg-white text-black hover:bg-gray-100 transition-colors touch-manipulation"
               >
                 <span className="font-medium">Entre em contato</span>
                 <ArrowRight className="ml-2 h-4 w-4" />

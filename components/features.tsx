@@ -156,20 +156,31 @@ const clients = [
 ]
 
 export default function Features() {
+  const handleContactClick = (location: string) => {
+    trackEvent("contact_click", {
+      location,
+      type: "button",
+      device: window.innerWidth <= 768 ? "mobile" : "desktop",
+    })
+  }
+
   return (
     <>
       {/* Pilares Section */}
-      <section id="pilares" className="container space-y-16 py-24 md:py-32">
-        <div className="mx-auto max-w-[58rem] text-center">
+      <section id="pilares" className="container space-y-12 sm:space-y-16 py-16 sm:py-24 md:py-32">
+        <div className="mx-auto max-w-[58rem] text-center px-4">
           <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">Pilares</h2>
           <p className="mt-4 text-muted-foreground sm:text-lg">
             Combinamos expertise em desenvolvimento de software, inovação e investimentos para impulsionar o crescimento
             do seu negócio.
           </p>
         </div>
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3 px-4">
           {pillars.map((pillar) => (
-            <div key={pillar.name} className="relative overflow-hidden rounded-lg border bg-background p-8">
+            <div
+              key={pillar.name}
+              className="relative overflow-hidden rounded-lg border bg-background p-6 sm:p-8 fade-in"
+            >
               <div className="flex items-center gap-4">
                 <pillar.icon className="h-8 w-8" aria-hidden="true" />
                 <h3 className="font-bold">{pillar.name}</h3>
@@ -181,18 +192,19 @@ export default function Features() {
       </section>
 
       {/* Benefícios Section */}
-      <section id="beneficios" className="container space-y-16 py-24 md:py-32 bg-gray-50/10">
-        <div className="mx-auto max-w-[58rem] text-center">
+      <section id="beneficios" className="container space-y-12 sm:space-y-16 py-16 sm:py-24 md:py-32 bg-gray-50/10">
+        <div className="mx-auto max-w-[58rem] text-center px-4">
           <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">Benefícios</h2>
           <p className="mt-4 text-muted-foreground sm:text-lg">
             Descubra como nossa abordagem integrada pode transformar seu negócio
           </p>
         </div>
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {benefits.map((benefit) => (
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 px-4">
+          {benefits.map((benefit, index) => (
             <div
               key={benefit.title}
-              className="relative overflow-hidden rounded-lg border bg-background p-8 shadow-sm transition-all hover:shadow-md"
+              className="relative overflow-hidden rounded-lg border bg-background p-6 sm:p-8 shadow-sm transition-all hover:shadow-md fade-in"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <benefit.icon className="h-6 w-6 text-primary" aria-hidden="true" />
@@ -202,7 +214,7 @@ export default function Features() {
             </div>
           ))}
         </div>
-        <div className="flex justify-center mt-12">
+        <div className="flex justify-center mt-8 sm:mt-12 px-4">
           <a
             href="mailto:contato@spinova.solutions"
             onClick={(e) => {
@@ -211,19 +223,15 @@ export default function Features() {
                 e.preventDefault()
                 window.location.href = "mailto:contato@spinova.solutions"
               }
-              trackEvent("contact_click", {
-                location: "benefits_section",
-                type: "button",
-                device: window.innerWidth <= 768 ? "mobile" : "desktop",
-              })
+              handleContactClick("benefits_section")
             }}
-            className="group inline-flex items-center px-3 py-2 sm:px-4 sm:py-2 text-sm font-medium rounded-md bg-white text-black hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 active:bg-gray-200"
+            className="group inline-flex items-center px-4 py-3 sm:px-6 sm:py-4 text-base font-medium rounded-md bg-white text-black hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 active:bg-gray-200 touch-manipulation"
             aria-label="Enviar email para contato@spinova.solutions"
             role="button"
           >
             <span>Entre em contato</span>
             <ArrowRight
-              className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300"
+              className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300"
               aria-hidden="true"
             />
           </a>
@@ -231,19 +239,23 @@ export default function Features() {
       </section>
 
       {/* Clientes Section */}
-      <section id="clientes" className="container space-y-16 py-24 md:py-32 bg-gray-900 text-white">
-        <div className="mx-auto max-w-[58rem] text-center">
+      <section
+        id="clientes"
+        className="container space-y-12 sm:space-y-16 py-16 sm:py-24 md:py-32 bg-gray-900 text-white"
+      >
+        <div className="mx-auto max-w-[58rem] text-center px-4">
           <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">Clientes</h2>
           <p className="mt-4 text-gray-300 sm:text-lg">
             Empresas e organizações que confiam na Spinova para impulsionar sua transformação digital e inovação
             tecnológica em diversos setores do mercado.
           </p>
         </div>
-        <div className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 md:gap-10">
-          {clients.map((client) => (
+        <div className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 sm:gap-8 md:gap-10 px-4">
+          {clients.map((client, index) => (
             <div
               key={client.name}
-              className="flex items-center justify-center p-4 transition-all duration-300 hover:opacity-80"
+              className="flex items-center justify-center p-4 transition-all duration-300 hover:opacity-80 fade-in"
+              style={{ animationDelay: `${index * 50}ms` }}
             >
               <Image
                 src={client.logo || "/placeholder.svg"}

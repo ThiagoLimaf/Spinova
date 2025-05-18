@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, type ReactNode } from "react"
+import { createContext, useContext, useState, useCallback, type ReactNode } from "react"
 
 type MobileMenuContextType = {
   isOpen: boolean
@@ -13,7 +13,9 @@ const MobileMenuContext = createContext<MobileMenuContextType | undefined>(undef
 export function MobileMenuProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const toggleMenu = () => setIsOpen(!isOpen)
+  const toggleMenu = useCallback(() => {
+    setIsOpen((prev) => !prev)
+  }, [])
 
   return <MobileMenuContext.Provider value={{ isOpen, setIsOpen, toggleMenu }}>{children}</MobileMenuContext.Provider>
 }

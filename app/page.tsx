@@ -2,6 +2,7 @@ import Navbar from "@/components/navbar"
 import Hero from "@/components/hero"
 import Features from "@/components/features"
 import Footer from "@/components/footer"
+import ScrollToTop from "@/components/scroll-to-top"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -22,11 +23,14 @@ export default function Home() {
 
       <div className="relative z-10">
         <Navbar />
-        <main>
+        <main className="pt-14">
+          {" "}
+          {/* Add padding-top to account for fixed navbar */}
           <Hero />
           <Features />
         </main>
         <Footer />
+        <ScrollToTop />
       </div>
     </div>
   )
