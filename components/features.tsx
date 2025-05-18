@@ -168,31 +168,6 @@ export default function Features() {
 
   return (
     <>
-      {/* Pilares Section */}
-      <section id="pilares" className="container space-y-12 sm:space-y-16 py-16 sm:py-24 md:py-32">
-        <FadeIn className="mx-auto max-w-[58rem] text-center px-4">
-          <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">Pilares</h2>
-          <p className="mt-4 text-muted-foreground sm:text-lg">
-            Combinamos expertise em desenvolvimento de software, inovação e investimentos para impulsionar o crescimento
-            do seu negócio.
-          </p>
-        </FadeIn>
-        <StaggerChildren
-          className="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3 px-4"
-          staggerDelay={150}
-        >
-          {pillars.map((pillar) => (
-            <div key={pillar.name} className="relative overflow-hidden rounded-lg border bg-background p-6 sm:p-8">
-              <div className="flex items-center gap-4">
-                <pillar.icon className="h-8 w-8" aria-hidden="true" />
-                <h3 className="font-bold">{pillar.name}</h3>
-              </div>
-              <p className="mt-2 text-muted-foreground">{pillar.description}</p>
-            </div>
-          ))}
-        </StaggerChildren>
-      </section>
-
       {/* Benefícios Section */}
       <section id="beneficios" className="container space-y-12 sm:space-y-16 py-16 sm:py-24 md:py-32 bg-gray-50/10">
         <FadeIn className="mx-auto max-w-[58rem] text-center px-4">

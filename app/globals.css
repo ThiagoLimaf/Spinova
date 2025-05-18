@@ -223,3 +223,33 @@
 .fade-in {
   animation: fadeIn 0.5s ease-out forwards;
 }
+
+/* Pilares section specific styles */
+.pilares-tabs [data-state="active"] {
+  font-weight: 600;
+  border-bottom: 2px solid hsl(var(--primary));
+}
+
+/* Custom scrollbar for horizontal tabs */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 10px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground));
+  border-radius: 10px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}
+
+/* Accordion custom styles */
+.accordion-content p {
+  margin-bottom: 0.5rem;
+}

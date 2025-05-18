@@ -1,5 +1,6 @@
 import Navbar from "@/components/navbar"
 import Hero from "@/components/hero"
+import PilaresSection from "@/components/pilares/pilares-section"
 import Features from "@/components/features"
 import Footer from "@/components/footer"
 import ScrollToTop from "@/components/scroll-to-top"
@@ -29,6 +30,7 @@ export default function Home() {
         <Navbar />
         <main className="pt-14">
           <Hero />
+          <PilaresSection />
           <Features />
         </main>
         <Footer />
