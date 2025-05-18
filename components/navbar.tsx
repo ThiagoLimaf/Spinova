@@ -17,7 +17,9 @@ import { FadeIn } from "./animations/fade-in"
 const navItems = [
   { href: "#pilares", label: "Pilares" },
   { href: "#beneficios", label: "Benefícios" },
+  { href: "#metodos", label: "Métodos", mobileOnly: false },
   { href: "#clientes", label: "Clientes" },
+  { href: "#contato", label: "Contato", mobileOnly: true },
 ]
 
 export default function Navbar() {
@@ -78,13 +80,13 @@ export default function Navbar() {
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden"
+      document.body.classList.add("menu-open")
       // Add touch event listeners for swipe to close
       document.addEventListener("touchstart", handleTouchStart)
       document.addEventListener("touchmove", handleTouchMove)
       document.addEventListener("touchend", handleTouchEnd)
     } else {
-      document.body.style.overflow = ""
+      document.body.classList.remove("menu-open")
       // Remove touch event listeners
       document.removeEventListener("touchstart", handleTouchStart)
       document.removeEventListener("touchmove", handleTouchMove)
@@ -92,7 +94,7 @@ export default function Navbar() {
     }
 
     return () => {
-      document.body.style.overflow = ""
+      document.body.classList.remove("menu-open")
       document.removeEventListener("touchstart", handleTouchStart)
       document.removeEventListener("touchmove", handleTouchMove)
       document.removeEventListener("touchend", handleTouchEnd)
@@ -120,19 +122,20 @@ export default function Navbar() {
 
   const handleNavClick = (section: string, href: string) => {
     trackEvent("navigation_click", { section })
-    setIsOpen(false)
 
     // Extract the section ID from the href
     const sectionId = href.startsWith("#") ? href.substring(1) : href
 
-    // Add a small delay on mobile to ensure menu closes first
-    if (window.innerWidth < 768) {
-      setTimeout(() => {
+    // Close the mobile menu first
+    setIsOpen(false)
+
+    // Add a small delay on mobile to ensure menu closes first before scrolling
+    setTimeout(
+      () => {
         scrollToSection(sectionId)
-      }, 300)
-    } else {
-      scrollToSection(sectionId)
-    }
+      },
+      window.innerWidth < 768 ? 300 : 0,
+    )
   }
 
   const handleContactClick = () => {
@@ -172,28 +175,32 @@ export default function Navbar() {
           className="hidden md:flex mx-auto items-center justify-center space-x-8 text-sm font-medium"
           aria-label="Principal"
         >
-          {navItems.map((item, index) => {
-            const isActive = activeSection === item.href.substring(1)
-            return (
-              <FadeIn key={item.href} delay={100 + index * 100} duration="fast">
-                <a
-                  href={item.href}
-                  className={cn(
-                    "transition-colors hover:text-primary relative py-1 px-1",
-                    isActive ? "text-primary font-semibold" : "text-foreground/80",
-                  )}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleNavClick(item.href.substring(1), item.href)
-                  }}
-                  aria-current={isActive ? "page" : undefined}
-                >
-                  {item.label}
-                  {isActive && <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full" />}
-                </a>
-              </FadeIn>
-            )
-          })}
+          {navItems
+            .filter((item) => !item.mobileOnly) // Exclude mobile-only items
+            .map((item, index) => {
+              const isActive = activeSection === item.href.substring(1)
+              return (
+                <FadeIn key={item.href} delay={100 + index * 100} duration="fast">
+                  <a
+                    href={item.href}
+                    className={cn(
+                      "transition-colors hover:text-primary relative py-1 px-1",
+                      isActive ? "text-primary font-semibold" : "text-foreground/80",
+                    )}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleNavClick(item.href.substring(1), item.href)
+                    }}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    {item.label}
+                    {isActive && (
+                      <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full active-indicator" />
+                    )}
+                  </a>
+                </FadeIn>
+              )
+            })}
         </nav>
 
         {/* Desktop CTA */}
@@ -241,6 +248,7 @@ export default function Navbar() {
           className={cn(
             "fixed inset-y-0 right-0 z-50 w-full max-w-xs bg-background shadow-xl md:hidden transition-transform duration-300 ease-in-out overscroll-contain",
             isOpen ? "translate-x-0" : "translate-x-full",
+            "flex flex-col", // Add this to ensure proper flex layout
           )}
           data-mobile-menu
         >
@@ -274,30 +282,32 @@ export default function Navbar() {
 
             <nav className="flex-1 overflow-y-auto p-4 overscroll-contain" aria-label="Menu mobile">
               <ul className="space-y-4">
-                {navItems.map((item, index) => {
-                  const isActive = activeSection === item.href.substring(1)
-                  return (
-                    <li key={index} className="menu-item-appear" style={{ animationDelay: `${index * 100}ms` }}>
-                      <a
-                        href={item.href}
-                        className={cn(
-                          "flex items-center justify-between py-4 px-4 rounded-md transition-colors touch-manipulation",
-                          isActive
-                            ? "bg-primary/10 text-primary font-medium"
-                            : "hover:bg-gray-100/10 text-foreground/80",
-                        )}
-                        onClick={(e) => {
-                          e.preventDefault()
-                          handleNavClick(item.href.substring(1), item.href)
-                        }}
-                        aria-current={isActive ? "page" : undefined}
-                      >
-                        <span className="text-lg">{item.label}</span>
-                        <ArrowRight className={cn("h-4 w-4", isActive ? "text-primary" : "opacity-70")} />
-                      </a>
-                    </li>
-                  )
-                })}
+                {navItems
+                  .filter((item) => !item.mobileOnly === false)
+                  .map((item, index) => {
+                    const isActive = activeSection === item.href.substring(1)
+                    return (
+                      <li key={index} className="menu-item-appear" style={{ animationDelay: `${index * 100}ms` }}>
+                        <a
+                          href={item.href}
+                          className={cn(
+                            "flex items-center justify-between py-4 px-4 rounded-md transition-colors touch-manipulation",
+                            isActive
+                              ? "bg-primary/10 text-primary font-medium"
+                              : "hover:bg-gray-100/10 text-foreground/80",
+                          )}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            handleNavClick(item.href.substring(1), item.href)
+                          }}
+                          aria-current={isActive ? "page" : undefined}
+                        >
+                          <span className="text-lg">{item.label}</span>
+                          <ArrowRight className={cn("h-4 w-4", isActive ? "text-primary" : "opacity-70")} />
+                        </a>
+                      </li>
+                    )
+                  })}
               </ul>
             </nav>
 
@@ -305,10 +315,8 @@ export default function Navbar() {
               <a
                 href="mailto:contato@spinova.solutions"
                 onClick={(e) => {
-                  if (window.innerWidth > 768) {
-                    e.preventDefault()
-                    window.location.href = "mailto:contato@spinova.solutions"
-                  }
+                  e.preventDefault()
+                  window.location.href = "mailto:contato@spinova.solutions"
                   handleContactClick()
                 }}
                 className="flex items-center justify-center w-full py-4 px-4 rounded-md bg-white text-black hover:bg-gray-100 transition-colors touch-manipulation"
