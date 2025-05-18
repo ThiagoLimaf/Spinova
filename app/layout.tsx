@@ -7,6 +7,7 @@ import Script from "next/script"
 import CookieConsent from "@/components/cookie-consent"
 import GoogleAnalytics from "@/components/google-analytics"
 import { Suspense } from "react"
+import { MobileMenuProvider } from "@/components/mobile-menu-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -77,6 +78,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#111827" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </head>
       <body className={`${inter.className} bg-background text-foreground antialiased`}>
         {/* Google Analytics */}
@@ -87,7 +89,9 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <MouseMoveEffect />
         </Suspense>
-        {children}
+
+        <MobileMenuProvider>{children}</MobileMenuProvider>
+
         <Suspense fallback={null}>
           <CookieConsent />
         </Suspense>
