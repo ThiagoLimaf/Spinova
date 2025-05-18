@@ -4,16 +4,27 @@ import type React from "react"
 
 import Link from "next/link"
 import Image from "next/image"
-import { Linkedin, Mail } from "lucide-react"
+import { Linkedin, Mail, MapPin, Copy, ExternalLink } from "lucide-react"
 import { trackEvent } from "@/utils/trackEvent"
 import { scrollToSection } from "@/utils/scroll-utils"
 import { FadeIn } from "./animations/fade-in"
+import { useState } from "react"
 
 export default function Footer() {
+  const [copySuccess, setCopySuccess] = useState(false)
+  const address = "Av. Engenheiro Luís Carlos Berrini, 1748 - Itaim Bibi, São Paulo/SP - 04571-010"
+
   const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault()
     scrollToSection(sectionId)
     trackEvent("footer_navigation_click", { section: sectionId })
+  }
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(address)
+    setCopySuccess(true)
+    trackEvent("address_copied", { location: "footer" })
+    setTimeout(() => setCopySuccess(false), 2000)
   }
 
   return (
@@ -81,7 +92,7 @@ export default function Footer() {
               <span className="sr-only">LinkedIn</span>
             </Link>
           </div>
-          <address className="text-sm text-gray-400 not-italic">
+          <address className="text-sm text-gray-400 not-italic space-y-3">
             <p>+55 48 9 8826 7335</p>
             <p>
               <a
@@ -92,6 +103,42 @@ export default function Footer() {
                 contato@spinova.solutions
               </a>
             </p>
+            <div className="bg-gray-800/50 rounded-lg p-3 border border-gray-700/50">
+              <div className="flex items-start">
+                <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" aria-hidden="true" />
+                <div className="ml-2">
+                  <p className="font-medium text-gray-300 mb-1">Escritório São Paulo</p>
+                  <p className="leading-relaxed">
+                    Av. Engenheiro Luís Carlos Berrini, 1748
+                    <br />
+                    Itaim Bibi, São Paulo/SP
+                    <br />
+                    04571-010
+                  </p>
+                  <div className="flex mt-2 space-x-2">
+                    <button
+                      onClick={copyToClipboard}
+                      className="inline-flex items-center text-xs bg-gray-700/50 hover:bg-gray-700 px-2 py-1 rounded transition-colors"
+                      aria-label="Copiar endereço"
+                    >
+                      <Copy className="h-3 w-3 mr-1" />
+                      {copySuccess ? "Copiado!" : "Copiar"}
+                    </button>
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-xs bg-gray-700/50 hover:bg-gray-700 px-2 py-1 rounded transition-colors"
+                      onClick={() => trackEvent("address_map_click", { location: "footer" })}
+                      aria-label="Ver no mapa"
+                    >
+                      <ExternalLink className="h-3 w-3 mr-1" />
+                      Ver no mapa
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </address>
         </div>
         <nav className="grid flex-1 grid-cols-2 gap-8 sm:gap-12 sm:grid-cols-3" aria-label="Rodapé">
