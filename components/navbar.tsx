@@ -80,13 +80,24 @@ export default function Navbar() {
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isOpen) {
-      document.body.classList.add("menu-open")
+      // Save the current scroll position
+      const scrollY = window.scrollY
+      document.body.style.position = "fixed"
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.width = "100%"
+
       // Add touch event listeners for swipe to close
       document.addEventListener("touchstart", handleTouchStart)
       document.addEventListener("touchmove", handleTouchMove)
       document.addEventListener("touchend", handleTouchEnd)
     } else {
-      document.body.classList.remove("menu-open")
+      // Restore the scroll position
+      const scrollY = document.body.style.top
+      document.body.style.position = ""
+      document.body.style.top = ""
+      document.body.style.width = ""
+      window.scrollTo(0, Number.parseInt(scrollY || "0") * -1)
+
       // Remove touch event listeners
       document.removeEventListener("touchstart", handleTouchStart)
       document.removeEventListener("touchmove", handleTouchMove)
@@ -94,7 +105,9 @@ export default function Navbar() {
     }
 
     return () => {
-      document.body.classList.remove("menu-open")
+      document.body.style.position = ""
+      document.body.style.top = ""
+      document.body.style.width = ""
       document.removeEventListener("touchstart", handleTouchStart)
       document.removeEventListener("touchmove", handleTouchMove)
       document.removeEventListener("touchend", handleTouchEnd)
@@ -114,8 +127,8 @@ export default function Navbar() {
   }
 
   const handleTouchEnd = () => {
-    // Swipe right to close menu
-    if (touchStartX.current - touchEndX.current > 100 && isOpen) {
+    // Swipe right to close menu (more sensitive)
+    if (touchStartX.current - touchEndX.current > 50 && isOpen) {
       setIsOpen(false)
     }
   }
@@ -221,7 +234,7 @@ export default function Navbar() {
         {/* Animated Hamburger Menu Button */}
         <FadeIn className="md:hidden" duration="fast">
           <button
-            className="flex items-center justify-center w-12 h-12 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary touch-manipulation"
+            className="flex items-center justify-center w-12 h-12 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary touch-manipulation z-50"
             onClick={toggleMenu}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
@@ -236,9 +249,10 @@ export default function Navbar() {
         <div
           className={cn(
             "fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300",
-            isOpen ? "opacity-100" : "opacity-0 pointer-events-none",
+            isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
           )}
           aria-hidden="true"
+          onClick={() => setIsOpen(false)}
         />
 
         {/* Mobile Menu */}
@@ -248,7 +262,7 @@ export default function Navbar() {
           className={cn(
             "fixed inset-y-0 right-0 z-50 w-full sm:max-w-sm bg-background shadow-xl md:hidden transition-transform duration-300 ease-in-out overscroll-contain",
             isOpen ? "translate-x-0" : "translate-x-full",
-            "flex flex-col", // Add this to ensure proper flex layout
+            "flex flex-col h-[100dvh]", // Use dynamic viewport height for better mobile support
           )}
           data-mobile-menu
         >
@@ -282,32 +296,30 @@ export default function Navbar() {
 
             <nav className="flex-1 overflow-y-auto p-5 overscroll-contain" aria-label="Menu mobile">
               <ul className="space-y-4">
-                {navItems
-                  .filter((item) => !item.mobileOnly === false)
-                  .map((item, index) => {
-                    const isActive = activeSection === item.href.substring(1)
-                    return (
-                      <li key={index} className="menu-item-appear" style={{ animationDelay: `${index * 100}ms` }}>
-                        <a
-                          href={item.href}
-                          className={cn(
-                            "flex items-center justify-between py-4 px-5 rounded-md transition-colors touch-manipulation text-lg",
-                            isActive
-                              ? "bg-primary/10 text-primary font-medium"
-                              : "hover:bg-gray-100/10 text-foreground/80",
-                          )}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            handleNavClick(item.href.substring(1), item.href)
-                          }}
-                          aria-current={isActive ? "page" : undefined}
-                        >
-                          <span className="text-lg font-medium">{item.label}</span>
-                          <ArrowRight className={cn("h-5 w-5", isActive ? "text-primary" : "opacity-70")} />
-                        </a>
-                      </li>
-                    )
-                  })}
+                {navItems.map((item, index) => {
+                  const isActive = activeSection === item.href.substring(1)
+                  return (
+                    <li key={index} className="menu-item-appear" style={{ animationDelay: `${index * 100}ms` }}>
+                      <a
+                        href={item.href}
+                        className={cn(
+                          "flex items-center justify-between py-4 px-5 rounded-md transition-colors touch-manipulation text-lg",
+                          isActive
+                            ? "bg-primary/10 text-primary font-medium"
+                            : "hover:bg-gray-100/10 text-foreground/80",
+                        )}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          handleNavClick(item.href.substring(1), item.href)
+                        }}
+                        aria-current={isActive ? "page" : undefined}
+                      >
+                        <span className="text-lg font-medium">{item.label}</span>
+                        <ArrowRight className={cn("h-5 w-5", isActive ? "text-primary" : "opacity-70")} />
+                      </a>
+                    </li>
+                  )
+                })}
               </ul>
             </nav>
 

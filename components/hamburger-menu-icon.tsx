@@ -18,8 +18,8 @@ export function HamburgerMenuIcon({ isOpen, className }: HamburgerMenuIconProps)
       />
       <span
         className={cn(
-          "absolute block h-0.5 bg-current transform transition-opacity duration-300 ease-in-out",
-          isOpen ? "opacity-0 w-0" : "opacity-100 w-6 top-2",
+          "absolute block h-0.5 bg-current transform transition-all duration-300 ease-in-out",
+          isOpen ? "opacity-0 w-0 left-1/2" : "opacity-100 w-6 top-2 left-0",
         )}
       />
       <span
