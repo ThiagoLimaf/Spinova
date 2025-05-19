@@ -5,6 +5,8 @@ import Features from "@/components/features"
 import Footer from "@/components/footer"
 import ScrollToTop from "@/components/scroll-to-top"
 import { PageTransition } from "@/components/page-transition"
+import { LanguageTransition } from "@/components/language-transition"
+import { DynamicMetadata } from "./dynamic-metadata"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -16,8 +18,14 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="relative min-h-screen">
+      {/* Dynamic metadata based on language */}
+      <DynamicMetadata />
+
       {/* Page transition animation */}
       <PageTransition />
+
+      {/* Language transition animation */}
+      <LanguageTransition />
 
       {/* Background gradients */}
       <div className="pointer-events-none fixed inset-0">

@@ -12,22 +12,28 @@ import { useActiveSection } from "./active-section-observer"
 import { scrollToSection } from "@/utils/scroll-utils"
 import { useMobileMenu } from "./mobile-menu-provider"
 import { FadeIn } from "./animations/fade-in"
+import { useLanguage } from "@/contexts/language-context"
+import { t } from "@/utils/translate"
+import { LanguageSwitcher } from "./language-switcher"
 
 // Navigation items
-const navItems = [
-  { href: "#pilares", label: "Pilares" },
-  { href: "#beneficios", label: "Benefícios" },
-  { href: "#clientes", label: "Clientes" },
-  { href: "#contato", label: "Contato", mobileOnly: true },
+const getNavItems = (language: string) => [
+  { href: "#pilares", label: t("nav.pillars", language as any) },
+  { href: "#beneficios", label: t("nav.benefits", language as any) },
+  { href: "#clientes", label: t("nav.clients", language as any) },
+  { href: "#contato", label: t("nav.contact", language as any), mobileOnly: true },
 ]
 
 export default function Navbar() {
+  const { language } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
   const { activeSection } = useActiveSection()
   const { isOpen, setIsOpen, toggleMenu } = useMobileMenu()
   const mobileMenuRef = useRef<HTMLDivElement>(null)
   const lastScrollY = useRef(0)
   const [hideNavbar, setHideNavbar] = useState(false)
+
+  const navItems = getNavItems(language)
 
   // Handle scroll effect
   useEffect(() => {
@@ -232,8 +238,9 @@ export default function Navbar() {
             })}
         </nav>
 
-        {/* Desktop CTA */}
-        <FadeIn className="hidden md:flex items-center" delay={400} duration="fast">
+        {/* Desktop CTA and Language Switcher */}
+        <FadeIn className="hidden md:flex items-center space-x-2" delay={400} duration="fast">
+          <LanguageSwitcher variant="full" />
           <a
             href="mailto:contato@spinova.org.br"
             onClick={(e) => {
@@ -243,12 +250,13 @@ export default function Navbar() {
             }}
             className="touch-manipulation"
           >
-            <Button size="sm">Entre em contato</Button>
+            <Button size="sm">{t("nav.contact", language as any)}</Button>
           </a>
         </FadeIn>
 
         {/* Animated Hamburger Menu Button */}
-        <FadeIn className="md:hidden" duration="fast">
+        <FadeIn className="md:hidden flex items-center space-x-2" duration="fast">
+          <LanguageSwitcher variant="icon" />
           <button
             className="flex items-center justify-center w-12 h-12 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary touch-manipulation z-50"
             onClick={toggleMenu}
@@ -309,14 +317,17 @@ export default function Navbar() {
                   className="h-8 w-auto"
                 />
               </Link>
-              <button
-                className="flex items-center justify-center w-12 h-12 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary touch-manipulation"
-                onClick={() => setIsOpen(false)}
-                aria-label="Fechar menu"
-                aria-controls="mobile-menu"
-              >
-                <HamburgerMenuIcon isOpen={true} />
-              </button>
+              <div className="flex items-center space-x-2">
+                <LanguageSwitcher variant="minimal" />
+                <button
+                  className="flex items-center justify-center w-12 h-12 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary touch-manipulation"
+                  onClick={() => setIsOpen(false)}
+                  aria-label="Fechar menu"
+                  aria-controls="mobile-menu"
+                >
+                  <HamburgerMenuIcon isOpen={true} />
+                </button>
+              </div>
             </div>
 
             <nav
@@ -371,7 +382,7 @@ export default function Navbar() {
                 role="button"
                 aria-label="Enviar email para contato@spinova.org.br"
               >
-                <span className="font-medium text-lg">Entre em contato</span>
+                <span className="font-medium text-lg">{t("nav.contact", language as any)}</span>
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </div>

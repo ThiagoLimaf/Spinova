@@ -3,76 +3,68 @@
 import { useState } from "react"
 import { FadeIn } from "../animations/fade-in"
 import { ChevronRight } from "lucide-react"
-
-// Define the pillar data structure
-interface SubSection {
-  id: string
-  title: string
-}
-
-interface Pilar {
-  id: string
-  title: string
-  subtitle?: string
-  subSections: SubSection[]
-}
-
-// Data for the three pillars
-const pilares: Pilar[] = [
-  {
-    id: "software",
-    title: "Software",
-    subtitle: "Soluções Tecnológicas Integradas",
-    subSections: [
-      { id: "1.1", title: "Desenvolvimento de Software e Aplicativos" },
-      { id: "1.2", title: "Planejamento e Design de Produtos Digitais" },
-      { id: "1.3", title: "Business Intelligence e Análise de Dados" },
-      { id: "1.4", title: "Automação e DevOps" },
-      { id: "1.5", title: "Qualidade e Testes" },
-    ],
-  },
-  {
-    id: "inovacao",
-    title: "Inovação",
-    subtitle: "Transformação Tecnológica e Cultural",
-    subSections: [
-      { id: "2.1", title: "Estratégia de IA e Automação" },
-      { id: "2.2", title: "Implementação de Soluções de IA" },
-      { id: "2.3", title: "Consultoria Executiva em IA" },
-      { id: "2.4", title: "Cultura de Inovação e Escala" },
-      { id: "2.5", title: "Implementação de Tecnologias Emergentes" },
-    ],
-  },
-  {
-    id: "venture",
-    title: "Venture",
-    subtitle: "Estratégias de Capital e Crescimento",
-    subSections: [
-      { id: "3.1", title: "Consultoria Executiva em Investimentos" },
-      { id: "3.2", title: "Investimento em Startups" },
-      { id: "3.3", title: "Programas de Aceleração e Incubação" },
-      { id: "3.4", title: "Venture Building" },
-      { id: "3.5", title: "M&A e Estruturação" },
-    ],
-  },
-]
+import { useLanguage } from "@/contexts/language-context"
+import { t } from "@/utils/translate"
 
 export default function PilaresSection() {
-  const [activePilar, setActivePilar] = useState<string>(pilares[0].id)
+  const { language } = useLanguage()
+  const [activePilar, setActivePilar] = useState<string>("software")
 
   const handlePilarClick = (pilarId: string) => {
     setActivePilar(pilarId)
   }
 
+  // Get pillar data from translations
+  const pilares = [
+    {
+      id: "software",
+      title: t("pillars.software.title", language as any),
+      subtitle: t("pillars.software.subtitle", language as any),
+      description: t("pillars.software.description", language as any),
+      subSections: [
+        { id: "1.1", title: t("pillars.software.subSections.development", language as any) },
+        { id: "1.2", title: t("pillars.software.subSections.planning", language as any) },
+        { id: "1.3", title: t("pillars.software.subSections.bi", language as any) },
+        { id: "1.4", title: t("pillars.software.subSections.automation", language as any) },
+        { id: "1.5", title: t("pillars.software.subSections.quality", language as any) },
+      ],
+    },
+    {
+      id: "inovacao",
+      title: t("pillars.innovation.title", language as any),
+      subtitle: t("pillars.innovation.subtitle", language as any),
+      description: t("pillars.innovation.description", language as any),
+      subSections: [
+        { id: "2.1", title: t("pillars.innovation.subSections.strategy", language as any) },
+        { id: "2.2", title: t("pillars.innovation.subSections.implementation", language as any) },
+        { id: "2.3", title: t("pillars.innovation.subSections.consulting", language as any) },
+        { id: "2.4", title: t("pillars.innovation.subSections.culture", language as any) },
+        { id: "2.5", title: t("pillars.innovation.subSections.emerging", language as any) },
+      ],
+    },
+    {
+      id: "venture",
+      title: t("pillars.venture.title", language as any),
+      subtitle: t("pillars.venture.subtitle", language as any),
+      description: t("pillars.venture.description", language as any),
+      subSections: [
+        { id: "3.1", title: t("pillars.venture.subSections.consulting", language as any) },
+        { id: "3.2", title: t("pillars.venture.subSections.investment", language as any) },
+        { id: "3.3", title: t("pillars.venture.subSections.acceleration", language as any) },
+        { id: "3.4", title: t("pillars.venture.subSections.building", language as any) },
+        { id: "3.5", title: t("pillars.venture.subSections.ma", language as any) },
+      ],
+    },
+  ]
+
   return (
     <section id="pilares" className="py-16 sm:py-24 md:py-32">
       <div className="container mx-auto">
         <FadeIn className="mx-auto max-w-[58rem] text-center px-4 mb-12">
-          <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">Pilares</h2>
-          <p className="mt-4 text-muted-foreground sm:text-lg">
-            Combinamos expertise em desenvolvimento de software, inovação e investimentos para impulsionar o crescimento
-            do seu negócio.
-          </p>
+          <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">
+            {t("pillars.title", language as any)}
+          </h2>
+          <p className="mt-4 text-muted-foreground sm:text-lg">{t("pillars.subtitle", language as any)}</p>
         </FadeIn>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -106,7 +98,7 @@ export default function PilaresSection() {
                   className="w-full py-2 px-4 rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors font-medium flex items-center justify-center"
                   onClick={() => handlePilarClick(pilar.id)}
                 >
-                  Saiba mais
+                  {t("pillars.learnMore", language as any)}
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </button>
               </div>

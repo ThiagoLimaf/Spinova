@@ -3,8 +3,11 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { X } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
+import { t } from "@/utils/translate"
 
 export default function CookieConsent() {
+  const { language } = useLanguage()
   const [showConsent, setShowConsent] = useState(false)
 
   useEffect(() => {
@@ -46,13 +49,7 @@ export default function CookieConsent() {
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="text-sm text-gray-300 max-w-3xl">
           <p>
-            Utilizamos cookies para melhorar sua experiência em nosso site. Eles nos ajudam a entender como você
-            interage com nosso conteúdo e a personalizar sua experiência. Ao clicar em "Aceitar", você concorda com o
-            uso de cookies conforme descrito em nossa{" "}
-            <a href="/privacidade" className="underline hover:text-white">
-              Política de Privacidade
-            </a>
-            . Para mais informações, entre em contato via{" "}
+            {t("cookies.message", language as any)}{" "}
             <a href="mailto:contato@spinova.org.br" className="underline hover:text-white">
               contato@spinova.org.br
             </a>
@@ -61,15 +58,15 @@ export default function CookieConsent() {
         </div>
         <div className="flex gap-3">
           <Button variant="outline" size="sm" onClick={declineCookies} className="text-gray-300 border-gray-700">
-            Recusar
+            {t("cookies.decline", language as any)}
           </Button>
           <Button size="sm" onClick={acceptCookies}>
-            Aceitar
+            {t("cookies.accept", language as any)}
           </Button>
           <button
             onClick={() => setShowConsent(false)}
             className="text-gray-400 hover:text-white p-1"
-            aria-label="Fechar aviso de cookies"
+            aria-label={t("cookies.close", language as any)}
           >
             <X size={18} />
           </button>

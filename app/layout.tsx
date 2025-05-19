@@ -9,6 +9,7 @@ import GoogleAnalytics from "@/components/google-analytics"
 import { Suspense } from "react"
 import { MobileMenuProvider } from "@/components/mobile-menu-provider"
 import { ActiveSectionProvider } from "@/components/active-section-observer"
+import { LanguageProvider } from "@/contexts/language-context"
 
 const inter = Inter({ subsets: ["latin"], display: "swap" })
 
@@ -117,46 +118,48 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
       <body className={`${inter.className} bg-background text-foreground antialiased mobile-safe-area`}>
-        {/* Google Analytics */}
-        <Suspense fallback={null}>
-          <GoogleAnalytics />
-        </Suspense>
+        <LanguageProvider>
+          {/* Google Analytics */}
+          <Suspense fallback={null}>
+            <GoogleAnalytics />
+          </Suspense>
 
-        <Suspense fallback={null}>
-          <MouseMoveEffect />
-        </Suspense>
+          <Suspense fallback={null}>
+            <MouseMoveEffect />
+          </Suspense>
 
-        <ActiveSectionProvider>
-          <MobileMenuProvider>{children}</MobileMenuProvider>
-        </ActiveSectionProvider>
+          <ActiveSectionProvider>
+            <MobileMenuProvider>{children}</MobileMenuProvider>
+          </ActiveSectionProvider>
 
-        <Suspense fallback={null}>
-          <CookieConsent />
-        </Suspense>
+          <Suspense fallback={null}>
+            <CookieConsent />
+          </Suspense>
 
-        {/* Structured Data for Organization */}
-        <Script
-          id="structured-data"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Spinova",
-              url: "https://spinova.solutions",
-              logo: "https://spinova.solutions/logo.png",
-              sameAs: ["https://www.linkedin.com/company/spinova-ict", "https://github.com/spinova"],
-              contactPoint: {
-                "@type": "ContactPoint",
-                telephone: "+55-48-98826-7335",
-                contactType: "customer service",
-                email: "contato@spinova.org.br",
-              },
-              description:
-                "A Spinova é um Instituto de Ciência e Tecnologia onde engenheiros e especialistas criam soluções inovadoras em software, inovação e venture capital.",
-            }),
-          }}
-        />
+          {/* Structured Data for Organization */}
+          <Script
+            id="structured-data"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                name: "Spinova",
+                url: "https://spinova.solutions",
+                logo: "https://spinova.solutions/logo.png",
+                sameAs: ["https://www.linkedin.com/company/spinova-ict", "https://github.com/spinova"],
+                contactPoint: {
+                  "@type": "ContactPoint",
+                  telephone: "+55-48-98826-7335",
+                  contactType: "customer service",
+                  email: "contato@spinova.org.br",
+                },
+                description:
+                  "A Spinova é um Instituto de Ciência e Tecnologia onde engenheiros e especialistas criam soluções inovadoras em software, inovação e venture capital.",
+              }),
+            }}
+          />
+        </LanguageProvider>
       </body>
     </html>
   )

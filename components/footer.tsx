@@ -9,8 +9,11 @@ import { trackEvent } from "@/utils/trackEvent"
 import { scrollToSection } from "@/utils/scroll-utils"
 import { FadeIn } from "./animations/fade-in"
 import { useState } from "react"
+import { useLanguage } from "@/contexts/language-context"
+import { t } from "@/utils/translate"
 
 export default function Footer() {
+  const { language } = useLanguage()
   const [copySuccess, setCopySuccess] = useState(false)
   const address = "Av. Engenheiro Luís Carlos Berrini, 1748 - Itaim Bibi, São Paulo/SP - 04571-010"
 
@@ -40,10 +43,7 @@ export default function Footer() {
               className="h-10 w-auto"
             />
           </Link>
-          <p className="text-sm text-gray-400">
-            Instituto de Ciência e Tecnologia onde engenheiros e especialistas criam soluções que impulsionam seu
-            negócio.
-          </p>
+          <p className="text-sm text-gray-400">{t("footer.description", language as any)}</p>
           <div className="flex space-x-4">
             <Link
               href="https://wa.me/5548988267335"
@@ -117,7 +117,7 @@ export default function Footer() {
               <div className="flex items-start">
                 <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" aria-hidden="true" />
                 <div className="ml-2">
-                  <p className="font-medium text-gray-300 mb-1">Escritório São Paulo</p>
+                  <p className="font-medium text-gray-300 mb-1">{t("footer.office", language as any)}</p>
                   <p className="leading-relaxed">
                     Av. Engenheiro Luís Carlos Berrini, 1748
                     <br />
@@ -129,10 +129,10 @@ export default function Footer() {
                     <button
                       onClick={copyToClipboard}
                       className="inline-flex items-center text-xs bg-gray-700/50 hover:bg-gray-700 px-2 py-1 rounded transition-colors"
-                      aria-label="Copiar endereço"
+                      aria-label={t("footer.copy", language as any)}
                     >
                       <Copy className="h-3 w-3 mr-1" />
-                      {copySuccess ? "Copiado!" : "Copiar"}
+                      {copySuccess ? t("footer.copied", language as any) : t("footer.copy", language as any)}
                     </button>
                     <a
                       href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
@@ -140,10 +140,10 @@ export default function Footer() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center text-xs bg-gray-700/50 hover:bg-gray-700 px-2 py-1 rounded transition-colors"
                       onClick={() => trackEvent("address_map_click", { location: "footer" })}
-                      aria-label="Ver no mapa"
+                      aria-label={t("footer.viewMap", language as any)}
                     >
                       <ExternalLink className="h-3 w-3 mr-1" />
-                      Ver no mapa
+                      {t("footer.viewMap", language as any)}
                     </a>
                   </div>
                 </div>
@@ -153,7 +153,7 @@ export default function Footer() {
         </div>
         <nav className="grid flex-1 grid-cols-2 gap-8 sm:gap-12 sm:grid-cols-3" aria-label="Rodapé">
           <div className="space-y-4">
-            <h3 className="text-sm font-medium">Soluções</h3>
+            <h3 className="text-sm font-medium">{t("footer.solutions", language as any)}</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <a
@@ -161,7 +161,7 @@ export default function Footer() {
                   className="text-gray-400 transition-colors hover:text-white block py-2 touch-manipulation"
                   onClick={(e) => handleSectionClick(e, "pilares")}
                 >
-                  Software
+                  {t("pillars.software.title", language as any)}
                 </a>
               </li>
               <li>
@@ -170,7 +170,7 @@ export default function Footer() {
                   className="text-gray-400 transition-colors hover:text-white block py-2 touch-manipulation"
                   onClick={(e) => handleSectionClick(e, "pilares")}
                 >
-                  Inovação
+                  {t("pillars.innovation.title", language as any)}
                 </a>
               </li>
               <li>
@@ -179,20 +179,20 @@ export default function Footer() {
                   className="text-gray-400 transition-colors hover:text-white block py-2 touch-manipulation"
                   onClick={(e) => handleSectionClick(e, "pilares")}
                 >
-                  Venture
+                  {t("pillars.venture.title", language as any)}
                 </a>
               </li>
             </ul>
           </div>
           <div className="space-y-4">
-            <h3 className="text-sm font-medium">Empresa</h3>
+            <h3 className="text-sm font-medium">{t("footer.company", language as any)}</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link
                   href="/"
                   className="text-gray-400 transition-colors hover:text-white block py-2 touch-manipulation"
                 >
-                  Sobre Nós
+                  {t("footer.aboutUs", language as any)}
                 </Link>
               </li>
               <li>
@@ -201,7 +201,7 @@ export default function Footer() {
                   className="text-gray-400 transition-colors hover:text-white block py-2 touch-manipulation"
                   onClick={(e) => handleSectionClick(e, "clientes")}
                 >
-                  Clientes
+                  {t("nav.clients", language as any)}
                 </a>
               </li>
               <li>
@@ -210,20 +210,20 @@ export default function Footer() {
                   className="text-gray-400 transition-colors hover:text-white block py-2 touch-manipulation"
                   onClick={(e) => handleSectionClick(e, "beneficios")}
                 >
-                  Benefícios
+                  {t("nav.benefits", language as any)}
                 </a>
               </li>
             </ul>
           </div>
           <div className="space-y-4">
-            <h3 className="text-sm font-medium">Recursos</h3>
+            <h3 className="text-sm font-medium">{t("footer.resources", language as any)}</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link
                   href="/blog"
                   className="text-gray-400 transition-colors hover:text-white block py-2 touch-manipulation"
                 >
-                  Blog
+                  {t("nav.blog", language as any)}
                 </Link>
               </li>
               <li>
@@ -232,7 +232,7 @@ export default function Footer() {
                   className="text-gray-400 transition-colors hover:text-white block py-2 touch-manipulation"
                   onClick={() => trackEvent("contact_click", { location: "footer_menu", type: "contact_link" })}
                 >
-                  Contato
+                  {t("nav.contact", language as any)}
                 </Link>
               </li>
               <li>
@@ -240,7 +240,7 @@ export default function Footer() {
                   href="/privacidade"
                   className="text-gray-400 transition-colors hover:text-white block py-2 touch-manipulation"
                 >
-                  Privacidade
+                  {t("nav.privacy", language as any)}
                 </Link>
               </li>
             </ul>
@@ -249,7 +249,7 @@ export default function Footer() {
       </FadeIn>
       <div className="container border-t border-gray-800 py-6 px-4 sm:px-6">
         <p className="text-center text-sm text-gray-400">
-          © {new Date().getFullYear()} Spinova. Todos os direitos reservados.
+          {t("footer.copyright", language as any, { year: new Date().getFullYear() })}
         </p>
       </div>
     </footer>
