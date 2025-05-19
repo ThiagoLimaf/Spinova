@@ -1,4 +1,3 @@
-import Navbar from "@/components/navbar"
 import Hero from "@/components/hero"
 import PilaresSection from "@/components/pilares/pilares-section"
 import Features from "@/components/features"
@@ -35,7 +34,6 @@ export default function Home() {
       </div>
 
       <div className="relative z-10">
-        <Navbar />
         <main className="pt-14">
           <Hero />
           <PilaresSection />

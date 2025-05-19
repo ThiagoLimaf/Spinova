@@ -10,6 +10,7 @@ import { Suspense } from "react"
 import { MobileMenuProvider } from "@/components/mobile-menu-provider"
 import { ActiveSectionProvider } from "@/components/active-section-observer"
 import { LanguageProvider } from "@/contexts/language-context"
+import Navbar from "@/components/navbar"
 
 const inter = Inter({ subsets: ["latin"], display: "swap" })
 
@@ -129,7 +130,10 @@ export default function RootLayout({
           </Suspense>
 
           <ActiveSectionProvider>
-            <MobileMenuProvider>{children}</MobileMenuProvider>
+            <MobileMenuProvider>
+              <Navbar /> {/* Add this line to ensure Navbar appears on all pages */}
+              {children}
+            </MobileMenuProvider>
           </ActiveSectionProvider>
 
           <Suspense fallback={null}>
