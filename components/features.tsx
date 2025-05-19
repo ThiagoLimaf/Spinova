@@ -194,17 +194,17 @@ export default function Features() {
         </div>
         <FadeIn className="flex justify-center mt-8 sm:mt-12 px-4" delay={600}>
           <a
-            href="mailto:contato@spinova.solutions"
+            href="mailto:contato@spinova.org.br"
             onClick={(e) => {
               // On mobile devices, we want the default mailto behavior
               if (window.innerWidth > 768) {
                 e.preventDefault()
-                window.location.href = "mailto:contato@spinova.solutions"
+                window.location.href = "mailto:contato@spinova.org.br"
               }
               handleContactClick("benefits_section")
             }}
             className="group inline-flex items-center px-4 py-3 sm:px-6 sm:py-4 text-base font-medium rounded-md bg-white text-black hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 active:bg-gray-200 touch-manipulation"
-            aria-label="Enviar email para contato@spinova.solutions"
+            aria-label="Enviar email para contato@spinova.org.br"
             role="button"
           >
             <span>Entre em contato</span>

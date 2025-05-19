@@ -150,7 +150,7 @@ export default function RootLayout({
                 "@type": "ContactPoint",
                 telephone: "+55-48-98826-7335",
                 contactType: "customer service",
-                email: "contato@spinova.solutions",
+                email: "contato@spinova.org.br",
               },
               description:
                 "A Spinova é um Instituto de Ciência e Tecnologia onde engenheiros e especialistas criam soluções inovadoras em software, inovação e venture capital.",

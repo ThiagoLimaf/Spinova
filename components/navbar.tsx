@@ -235,10 +235,10 @@ export default function Navbar() {
         {/* Desktop CTA */}
         <FadeIn className="hidden md:flex items-center" delay={400} duration="fast">
           <a
-            href="mailto:contato@spinova.solutions"
+            href="mailto:contato@spinova.org.br"
             onClick={(e) => {
               e.preventDefault()
-              window.location.href = "mailto:contato@spinova.solutions"
+              window.location.href = "mailto:contato@spinova.org.br"
               handleContactClick()
             }}
             className="touch-manipulation"
@@ -361,15 +361,15 @@ export default function Navbar() {
 
             <div className="p-5 border-t mt-auto" role="complementary" aria-label="Contato">
               <a
-                href="mailto:contato@spinova.solutions"
+                href="mailto:contato@spinova.org.br"
                 onClick={(e) => {
                   e.preventDefault()
-                  window.location.href = "mailto:contato@spinova.solutions"
+                  window.location.href = "mailto:contato@spinova.org.br"
                   handleContactClick()
                 }}
                 className="flex items-center justify-center w-full py-4 px-5 rounded-md bg-white text-black hover:bg-gray-100 transition-colors touch-manipulation"
                 role="button"
-                aria-label="Enviar email para contato@spinova.solutions"
+                aria-label="Enviar email para contato@spinova.org.br"
               >
                 <span className="font-medium text-lg">Entre em contato</span>
                 <ArrowRight className="ml-2 h-5 w-5" />

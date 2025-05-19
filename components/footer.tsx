@@ -71,7 +71,7 @@ export default function Footer() {
               <span className="sr-only">WhatsApp</span>
             </Link>
             <Link
-              href="mailto:contato@spinova.solutions"
+              href="mailto:contato@spinova.org.br"
               className="text-gray-400 transition-colors hover:text-white touch-manipulation p-2"
               target="_blank"
               rel="noreferrer"
@@ -93,14 +93,24 @@ export default function Footer() {
             </Link>
           </div>
           <address className="text-sm text-gray-400 not-italic space-y-3">
-            <p>+55 48 9 8826 7335</p>
             <p>
               <a
-                href="mailto:contato@spinova.solutions"
+                href="https://wa.me/5548988267335"
+                className="hover:text-white transition-colors touch-manipulation"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent("contact_click", { location: "footer", type: "whatsapp_text" })}
+              >
+                +55 48 9 8826 7335
+              </a>
+            </p>
+            <p>
+              <a
+                href="mailto:contato@spinova.org.br"
                 className="hover:text-white transition-colors touch-manipulation"
                 onClick={() => trackEvent("contact_click", { location: "footer", type: "email_text" })}
               >
-                contato@spinova.solutions
+                contato@spinova.org.br
               </a>
             </p>
             <div className="bg-gray-800/50 rounded-lg p-3 border border-gray-700/50">
@@ -218,7 +228,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="mailto:contato@spinova.solutions"
+                  href="mailto:contato@spinova.org.br"
                   className="text-gray-400 transition-colors hover:text-white block py-2 touch-manipulation"
                   onClick={() => trackEvent("contact_click", { location: "footer_menu", type: "contact_link" })}
                 >

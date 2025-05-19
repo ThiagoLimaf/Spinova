@@ -38,10 +38,10 @@ export default function Hero() {
       <FadeIn delay={600} duration="medium">
         <div className="flex gap-4">
           <a
-            href="mailto:contato@spinova.solutions"
+            href="mailto:contato@spinova.org.br"
             onClick={(e) => {
               e.preventDefault()
-              window.location.href = "mailto:contato@spinova.solutions"
+              window.location.href = "mailto:contato@spinova.org.br"
               handleContactClick()
             }}
             className="touch-manipulation"

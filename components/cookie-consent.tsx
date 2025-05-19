@@ -53,8 +53,8 @@ export default function CookieConsent() {
               Política de Privacidade
             </a>
             . Para mais informações, entre em contato via{" "}
-            <a href="mailto:contato@spinova.solutions" className="underline hover:text-white">
-              contato@spinova.solutions
+            <a href="mailto:contato@spinova.org.br" className="underline hover:text-white">
+              contato@spinova.org.br
             </a>
             .
           </p>

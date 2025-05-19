@@ -100,8 +100,8 @@ export default function PrivacyPolicy() {
         <p>
           Se você tiver dúvidas sobre esta Política de Privacidade ou qualquer outro assunto, entre em contato conosco
           pelo e-mail:{" "}
-          <a href="mailto:contato@spinova.solutions" className="text-primary hover:underline font-bold">
-            contato@spinova.solutions
+          <a href="mailto:contato@spinova.org.br" className="text-primary hover:underline font-bold">
+            contato@spinova.org.br
           </a>
         </p>
         <p className="mt-2">
