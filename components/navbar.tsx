@@ -26,11 +26,27 @@ export default function Navbar() {
   const { activeSection } = useActiveSection()
   const { isOpen, setIsOpen, toggleMenu } = useMobileMenu()
   const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const lastScrollY = useRef(0)
+  const [hideNavbar, setHideNavbar] = useState(false)
 
-  // Handle scroll effect - only detect if page is scrolled for styling
+  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
+      const currentScrollY = window.scrollY
+
+      // Show/hide navbar based on scroll direction
+      if (currentScrollY > 100) {
+        if (currentScrollY > lastScrollY.current) {
+          setHideNavbar(true)
+        } else {
+          setHideNavbar(false)
+        }
+      } else {
+        setHideNavbar(false)
+      }
+
+      lastScrollY.current = currentScrollY
+      setScrolled(currentScrollY > 10)
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
@@ -157,6 +173,7 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full border-b backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300",
         scrolled ? "border-border/40 bg-background/95 shadow-sm" : "border-transparent bg-background/50",
+        hideNavbar ? "-translate-y-full" : "translate-y-0",
       )}
       role="banner"
       aria-label="Site navigation"
