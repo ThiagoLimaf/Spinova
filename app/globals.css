@@ -94,9 +94,122 @@
   }
 }
 
+/* Enhanced mobile menu animations */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes overlayFadeOut {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Enhanced mobile menu animations for better visibility */
+@keyframes menuExpandHeight {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 100vh;
+    opacity: 1;
+  }
+}
+
+/* Update the menu-item-appear animation */
 .menu-item-appear {
-  animation: slideUp 0.3s ease-out forwards;
+  animation: staggerFadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   opacity: 0;
+}
+
+/* Add these new classes for enhanced mobile menu animations */
+.mobile-menu-enter {
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-menu-enter.mobile-menu-enter-active {
+  transform: translateX(0%);
+}
+
+/* Replace the existing mobile-menu-exit animation with this */
+.mobile-menu-exit {
+  transform: translateX(0%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-menu-exit.mobile-menu-exit-active {
+  transform: translateX(100%);
+}
+
+.mobile-menu-overlay-enter {
+  animation: overlayFadeIn 0.4s ease forwards;
+}
+
+.mobile-menu-overlay-exit {
+  animation: overlayFadeOut 0.3s ease forwards;
+}
+
+.mobile-menu-content-enter {
+  animation: scaleUp 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 0.1s;
 }
 
 /* Active section indicator animation */
@@ -113,6 +226,30 @@
 
 .active-indicator {
   animation: fadeWidth 0.3s ease-out forwards;
+}
+
+/* Header shrink animation */
+@keyframes shrinkHeader {
+  from {
+    height: 5rem;
+    background-opacity: 0.5;
+  }
+  to {
+    height: 3.5rem;
+    background-opacity: 0.95;
+  }
+}
+
+/* Header expand animation */
+@keyframes expandHeader {
+  from {
+    height: 3.5rem;
+    background-opacity: 0.95;
+  }
+  to {
+    height: 5rem;
+    background-opacity: 0.5;
+  }
 }
 
 /* Loading spinner animation */
@@ -204,6 +341,90 @@
     position: fixed;
     width: 100%;
   }
+
+  /* Improved mobile menu layout */
+  [data-mobile-menu] {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+  }
+
+  /* Ensure menu items are properly sized and visible */
+  .mobile-menu-item {
+    min-height: 3.5rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  }
+
+  .mobile-menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .mobile-menu-item:active {
+    transform: scale(0.98);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Improve menu animation */
+  .mobile-menu-enter {
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-menu-enter.mobile-menu-enter-active {
+    transform: translateX(0%);
+  }
+
+  /* Replace the existing mobile-menu-exit animation with this */
+  .mobile-menu-exit {
+    transform: translateX(0%);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-menu-exit.mobile-menu-exit-active {
+    transform: translateX(100%);
+  }
+
+  /* Ensure content is centered when there are few items */
+  #mobile-navigation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Improve staggered animation for menu items */
+  .menu-item-appear {
+    animation: staggerFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  /* Smooth dropdown-like animation */
+  .mobile-menu-dropdown {
+    transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    overflow: hidden;
+  }
+
+  .mobile-menu-dropdown.open {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Improved focus states for keyboard navigation */
+  .mobile-menu-item:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
 }
 
 /* Responsive spacing adjustments */
@@ -290,6 +511,38 @@
   }
 }
 
+/* Add these touch feedback styles */
+.mobile-menu-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-menu-item::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  border-radius: inherit;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.mobile-menu-item:active::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0.05;
+  transition: transform 0s, opacity 0.1s;
+}
+
+/* Enhanced hamburger animation */
+.hamburger-line {
+  transition: transform 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6), opacity 0.3s ease;
+}
+
 /* Safe area insets for notched devices */
 @supports (padding: max(0px)) {
   .mobile-safe-area {
@@ -303,4 +556,43 @@
     padding-bottom: env(safe-area-inset-bottom);
     padding-top: env(safe-area-inset-top);
   }
+}
+
+/* Apply smooth transitions to header elements */
+header * {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Adjust content padding to account for taller header */
+main {
+  padding-top: 5rem; /* Default padding for non-scrolled state */
+  transition: padding-top 0.3s ease-in-out;
+}
+
+/* Adjust padding when header shrinks */
+.header-scrolled main {
+  padding-top: 3.5rem;
+}
+
+/* Standard web navigation-like animations */
+.web-nav-item-enter {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.web-nav-item-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.web-nav-item-exit {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.web-nav-item-exit-active {
+  opacity: 0;
+  transform: translateY(10px);
 }
