@@ -40,17 +40,6 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
 
-      // Show/hide navbar based on scroll direction
-      if (currentScrollY > 100) {
-        if (currentScrollY > lastScrollY.current) {
-          setHideNavbar(true)
-        } else {
-          setHideNavbar(false)
-        }
-      } else {
-        setHideNavbar(false)
-      }
-
       // Add or remove scrolled class on body
       if (currentScrollY > 10) {
         document.body.classList.add("header-scrolled")
@@ -58,7 +47,6 @@ export default function Navbar() {
         document.body.classList.remove("header-scrolled")
       }
 
-      lastScrollY.current = currentScrollY
       setScrolled(currentScrollY > 10)
     }
 
@@ -186,7 +174,6 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full border-b backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300",
         scrolled ? "border-border/40 bg-background/95 shadow-sm h-14" : "border-transparent bg-background/50 h-20",
-        hideNavbar ? "-translate-y-full" : "translate-y-0",
       )}
       role="banner"
       aria-label="Site navigation"

@@ -4,7 +4,7 @@ import type React from "react"
 
 import Link from "next/link"
 import Image from "next/image"
-import { Linkedin, Mail, MapPin, Copy, ExternalLink } from "lucide-react"
+import { Linkedin, Mail, MapPin, Copy } from "lucide-react"
 import { trackEvent } from "@/utils/trackEvent"
 import { scrollToSection } from "@/utils/scroll-utils"
 import { FadeIn } from "./animations/fade-in"
@@ -44,112 +44,95 @@ export default function Footer() {
             />
           </Link>
           <p className="text-sm text-gray-400">{t("footer.description", language as any)}</p>
-          <div className="flex space-x-4">
-            <Link
-              href="https://wa.me/5548988267335"
-              className="text-gray-400 transition-colors hover:text-white touch-manipulation p-2"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="WhatsApp"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
-                aria-hidden="true"
-              >
-                <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
-                <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1Z" />
-                <path d="M13.5 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1Z" />
-                <path d="M9 13.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 0-1h-5a.5.5 0 0 0-.5.5Z" />
-              </svg>
-              <span className="sr-only">WhatsApp</span>
-            </Link>
-            <Link
-              href="mailto:contato@spinova.org.br"
-              className="text-gray-400 transition-colors hover:text-white touch-manipulation p-2"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Email"
-              onClick={() => trackEvent("contact_click", { location: "footer", type: "email" })}
-            >
-              <Mail className="h-5 w-5" aria-hidden="true" />
-              <span className="sr-only">Email</span>
-            </Link>
-            <Link
-              href="https://www.linkedin.com/company/spinova-ict"
-              className="text-gray-400 transition-colors hover:text-white touch-manipulation p-2"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="h-5 w-5" aria-hidden="true" />
-              <span className="sr-only">LinkedIn</span>
-            </Link>
-          </div>
-          <address className="text-sm text-gray-400 not-italic space-y-3">
-            <p>
+
+          {/* Vertical contact links with labels */}
+          <div className="space-y-4 py-2">
+            <div className="flex items-center space-x-3">
+              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-gray-800/50">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                >
+                  <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
+                  <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1Z" />
+                  <path d="M13.5 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1Z" />
+                  <path d="M9 13.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 0-1h-5a.5.5 0 0 0-.5.5Z" />
+                </svg>
+              </div>
               <a
                 href="https://wa.me/5548988267335"
-                className="hover:text-white transition-colors touch-manipulation"
+                className="text-gray-300 hover:text-white transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => trackEvent("contact_click", { location: "footer", type: "whatsapp_text" })}
+                onClick={() => trackEvent("contact_click", { location: "footer", type: "whatsapp" })}
               >
                 +55 48 9 8826 7335
               </a>
-            </p>
-            <p>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-gray-800/50">
+                <Mail className="h-5 w-5 text-gray-400" aria-hidden="true" />
+              </div>
               <a
                 href="mailto:contato@spinova.org.br"
-                className="hover:text-white transition-colors touch-manipulation"
-                onClick={() => trackEvent("contact_click", { location: "footer", type: "email_text" })}
+                className="text-gray-300 hover:text-white transition-colors"
+                onClick={() => trackEvent("contact_click", { location: "footer", type: "email" })}
               >
                 contato@spinova.org.br
               </a>
-            </p>
-            <div className="bg-gray-800/50 rounded-lg p-3 border border-gray-700/50">
-              <div className="flex items-start">
-                <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" aria-hidden="true" />
-                <div className="ml-2">
-                  <p className="font-medium text-gray-300 mb-1">{t("footer.office", language as any)}</p>
-                  <p className="leading-relaxed">
-                    Av. Engenheiro Luís Carlos Berrini, 1748
-                    <br />
-                    Itaim Bibi, São Paulo/SP
-                    <br />
-                    04571-010
-                  </p>
-                  <div className="flex mt-2 space-x-2">
-                    <button
-                      onClick={copyToClipboard}
-                      className="inline-flex items-center text-xs bg-gray-700/50 hover:bg-gray-700 px-2 py-1 rounded transition-colors"
-                      aria-label={t("footer.copy", language as any)}
-                    >
-                      <Copy className="h-3 w-3 mr-1" />
-                      {copySuccess ? t("footer.copied", language as any) : t("footer.copy", language as any)}
-                    </button>
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-xs bg-gray-700/50 hover:bg-gray-700 px-2 py-1 rounded transition-colors"
-                      onClick={() => trackEvent("address_map_click", { location: "footer" })}
-                      aria-label={t("footer.viewMap", language as any)}
-                    >
-                      <ExternalLink className="h-3 w-3 mr-1" />
-                      {t("footer.viewMap", language as any)}
-                    </a>
-                  </div>
-                </div>
-              </div>
             </div>
-          </address>
+
+            <div className="flex items-center space-x-3">
+              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-gray-800/50">
+                <Linkedin className="h-5 w-5 text-gray-400" aria-hidden="true" />
+              </div>
+              <a
+                href="https://www.linkedin.com/company/spinova-ict"
+                className="text-gray-300 hover:text-white transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent("contact_click", { location: "footer", type: "linkedin" })}
+              >
+                linkedin.com/company/spinova-ict
+              </a>
+            </div>
+          </div>
+          <div className="flex items-center space-x-3 mt-4">
+            <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-gray-800/50">
+              <MapPin className="h-5 w-5 text-gray-400" aria-hidden="true" />
+            </div>
+            <div>
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-white transition-colors block"
+                onClick={() => trackEvent("address_map_click", { location: "footer" })}
+              >
+                Av. Engenheiro Luís Carlos Berrini, 1748
+                <br />
+                Itaim Bibi, São Paulo/SP
+                <br />
+                04571-010
+              </a>
+              <button
+                onClick={copyToClipboard}
+                className="text-gray-400 hover:text-white text-sm flex items-center mt-1 transition-colors"
+                aria-label={t("footer.copy", language as any)}
+              >
+                <Copy className="h-3 w-3 mr-1" />
+                {copySuccess ? t("footer.copied", language as any) : t("footer.copy", language as any)}
+              </button>
+            </div>
+          </div>
         </div>
         <nav className="grid flex-1 grid-cols-2 gap-8 sm:gap-12 sm:grid-cols-3" aria-label="Rodapé">
           <div className="space-y-4">
