@@ -28,7 +28,7 @@ const getNavItems = (language: string) => [
 export default function Navbar() {
   const { language } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
-  const { activeSection } = useActiveSection()
+  const { activeSection, setActiveSection } = useActiveSection()
   const { isOpen, setIsOpen, toggleMenu } = useMobileMenu()
   const mobileMenuRef = useRef<HTMLDivElement>(null)
   const lastScrollY = useRef(0)
@@ -159,7 +159,33 @@ export default function Navbar() {
     // Add a small delay on mobile to ensure menu closes first before scrolling
     setTimeout(
       () => {
-        scrollToSection(sectionId)
+        // Enhanced smooth scrolling
+        const targetElement = document.getElementById(sectionId)
+        if (targetElement) {
+          // Get the header height to offset the scroll position
+          const header = document.querySelector("header")
+          const headerOffset = header ? header.getBoundingClientRect().height : 0
+
+          // Calculate the target position with offset
+          const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerOffset - 20
+
+          // Smooth scroll with enhanced easing
+          window.scrollTo({
+            top: targetPosition,
+            behavior: "smooth",
+          })
+
+          // Update URL hash without jumping
+          setTimeout(() => {
+            history.pushState(null, "", `#${sectionId}`)
+            // Force active section update
+            if (setActiveSection) {
+              setActiveSection(sectionId)
+            }
+          }, 100)
+        } else {
+          scrollToSection(sectionId)
+        }
       },
       window.innerWidth < 768 ? 300 : 0,
     )
@@ -169,6 +195,49 @@ export default function Navbar() {
     trackEvent("contact_button_click", { location: "navbar" })
     setIsOpen(false)
   }
+
+  useEffect(() => {
+    // Enhanced scroll behavior for smoother active section detection
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 100 // Offset for better detection
+
+      // Get all section elements
+      const sections = navItems
+        .filter((item) => !item.mobileOnly && item.href.startsWith("#"))
+        .map((item) => {
+          const sectionId = item.href.substring(1)
+          const element = document.getElementById(sectionId)
+          return { id: sectionId, element, top: element?.offsetTop || 0 }
+        })
+        .filter((section) => section.element)
+
+      // Find the current active section based on scroll position
+      let currentSection = null
+      for (let i = sections.length - 1; i >= 0; i--) {
+        if (scrollPosition >= sections[i].top) {
+          currentSection = sections[i].id
+          break
+        }
+      }
+
+      // If we found an active section and it's different from the current one
+      if (currentSection && activeSection !== currentSection) {
+        // Update active section in the context
+        if (setActiveSection) {
+          setActiveSection(currentSection)
+        }
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+
+    // Initial check
+    setTimeout(handleScroll, 100)
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [navItems, activeSection, setActiveSection])
 
   return (
     <header
@@ -223,7 +292,7 @@ export default function Navbar() {
                   <a
                     href={item.href}
                     className={cn(
-                      "transition-all duration-200 hover:text-primary relative py-1 px-1",
+                      "transition-all duration-300 hover:text-primary relative py-1 px-1 group",
                       isActive ? "text-primary font-semibold" : "text-foreground/80",
                       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
                       "active:scale-95",
@@ -236,9 +305,13 @@ export default function Navbar() {
                     data-nav-item
                   >
                     {item.label}
-                    {isActive && (
-                      <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full active-indicator" />
-                    )}
+                    {/* Enhanced active indicator with smoother animation */}
+                    <span
+                      className={cn(
+                        "absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full transition-all duration-300",
+                        isActive ? "opacity-100 w-full" : "opacity-0 w-0 group-hover:w-1/2 group-hover:opacity-50",
+                      )}
+                    />
                   </a>
                 </FadeIn>
               )

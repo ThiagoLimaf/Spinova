@@ -23,17 +23,26 @@ export function ActiveSectionProvider({ children }: { children: React.ReactNode 
 
     const observerOptions = {
       root: null,
-      // Adjust these values for better mobile experience
-      rootMargin: isMobile ? "-10% 0px -70% 0px" : "-20% 0px -70% 0px",
-      threshold: 0,
+      // Improved rootMargin values for better detection
+      rootMargin: isMobile ? "-15% 0px -65% 0px" : "-25% 0px -65% 0px",
+      threshold: [0, 0.1, 0.2, 0.5], // Multiple thresholds for smoother transitions
     }
 
     const observerCallback: IntersectionObserverCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id)
+      // Filter for entries that are intersecting
+      const intersectingEntries = entries.filter((entry) => entry.isIntersecting)
+
+      if (intersectingEntries.length > 0) {
+        // Sort by intersection ratio to find the most visible section
+        const mostVisibleEntry = intersectingEntries.reduce((prev, current) => {
+          return prev.intersectionRatio > current.intersectionRatio ? prev : current
+        })
+
+        // Only update if the intersection ratio is significant
+        if (mostVisibleEntry.intersectionRatio > 0.1) {
+          setActiveSection(mostVisibleEntry.target.id)
         }
-      })
+      }
     }
 
     const observer = new IntersectionObserver(observerCallback, observerOptions)
