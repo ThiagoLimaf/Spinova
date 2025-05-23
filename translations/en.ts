@@ -4,10 +4,12 @@ export const en = {
     pillars: "Pillars",
     benefits: "Benefits",
     clients: "Clients",
+    experience: "Experience",
     contact: "Contact",
     about: "About Us",
     blog: "Blog",
     privacy: "Privacy",
+    howWeWork: "How We Work",
   },
 
   // Hero section
@@ -67,6 +69,134 @@ export const en = {
     learnMore: "Learn more",
   },
 
+  // How We Work section
+  howWeWork: {
+    title: "How We Work",
+    subtitle: "Discover our specialized approaches to transform challenges into opportunities",
+    categories: {
+      software: {
+        title: "Technology Strategy & Orchestration",
+        subtitle: "Strategic architecture and coordination of technological solutions",
+        description:
+          "We design complete architectures and coordinate implementation of technological solutions through qualified partners.",
+        services: {
+          enterpriseSolution: {
+            title: "Enterprise Solution Architecture",
+            subtitle: "Strategic architecture of enterprise technology solutions",
+            description:
+              "We design complete enterprise solution architectures and coordinate implementation through qualified technical partners. We act as a specialized PMO, ensuring integration, quality, and strategic alignment in complex multi-vendor technology projects.",
+            forWhom:
+              "Companies initiating complex digital transformations that need specialized technical coordination and guaranteed success in implementation.",
+          },
+          technologyAdvisory: {
+            title: "Technology Advisory & Due Diligence",
+            subtitle: "Executive consulting for strategic technology decisions",
+            description:
+              "We offer in-depth technical analysis for investment decisions, vendor selection, and solution evaluation. We conduct technology audits, market benchmarking, and strategic recommendations to maximize ROI in technology initiatives.",
+            forWhom:
+              "C-level executives evaluating major technology investments, companies considering startup acquisitions, or organizations selecting strategic vendors.",
+          },
+          digitalTransformation: {
+            title: "Digital Transformation PMO",
+            subtitle: "Executive management of digital transformation programs",
+            description:
+              "We structure and lead project offices specialized in digital transformation. We coordinate multiple vendors, ensure integration between systems, and manage complex schedules to deliver results on time and within budget.",
+            forWhom:
+              "Large companies undergoing digital transformation with multiple simultaneous initiatives that need specialized central coordination.",
+          },
+          vendorManagement: {
+            title: "Technology Vendor Management",
+            subtitle: "Strategic management of technology vendors",
+            description:
+              "We manage relationships with technology vendors, coordinate complex contracts, and ensure value delivery. We conduct continuous performance evaluations and negotiate optimized conditions for critical technologies.",
+            forWhom:
+              "Companies with multiple technology vendors that need specialized coordination or organizations seeking optimization of contracts and relationships.",
+          },
+        },
+      },
+      innovation: {
+        title: "Innovation Catalyst",
+        subtitle: "Strategic innovation that transforms markets",
+        description:
+          "We accelerate digital transformation through personalized innovation strategies and implementation of emerging technologies.",
+        services: {
+          aiImplementation: {
+            title: "AI Strategic Implementation",
+            subtitle: "Strategic implementation of Artificial Intelligence",
+            description:
+              "We implement AI solutions that generate real value: from customized AI agents and cognitive automation to industrial computer vision. We develop corporate AI roadmaps, create centers of excellence, and ensure ethical and scalable implementation.",
+            forWhom:
+              "Mature companies seeking sustainable competitive differentiation through artificial intelligence applied to core business.",
+          },
+          executiveAdvisory: {
+            title: "Executive AI Advisory",
+            subtitle: "Executive consulting in Artificial Intelligence",
+            description:
+              "We empower executives with strategic knowledge about AI, separating hype from real opportunities. We create adoption strategies, governance policies, and investment frameworks to position your company as a technology leader in the sector.",
+            forWhom:
+              "CEOs, CTOs, and directors who need clear strategic vision on how AI will impact their businesses and how to prepare for the future.",
+          },
+          cultureTransformation: {
+            title: "Innovation Culture Transformation",
+            subtitle: "Cultural transformation for innovation",
+            description:
+              "We develop internal innovation ecosystems with structured processes, agile methodologies at scale, and intrapreneurship programs. We implement innovation labs, executive design thinking, and experimentation metrics.",
+            forWhom:
+              "Traditional corporations in digital transformation process that need to accelerate internal innovation capacity.",
+          },
+          emergingTech: {
+            title: "Emerging Tech Lab",
+            subtitle: "Emerging technologies laboratory",
+            description:
+              "We research, validate, and implement cutting-edge technologies: enterprise blockchain, industrial IoT, digital twins, and extended reality. We maintain partnerships with universities and research centers for early access to innovations.",
+            forWhom:
+              "Companies that want to be at the technological forefront and explore opportunities in emerging technologies before the competition.",
+          },
+        },
+      },
+      venture: {
+        title: "Venture Partners",
+        subtitle: "Capital strategies and accelerated growth",
+        description:
+          "We offer specialized services in strategic investments, corporate venture capital, and startup acceleration.",
+        services: {
+          corporateVenture: {
+            title: "Corporate Venture Program",
+            subtitle: "Corporate Venture Capital programs",
+            description:
+              "We structure and operate CVC funds aligned with corporate strategy. We manage from startup sourcing to technical due diligence, deal negotiation, and integration with business units. We create technological radar through investment portfolio.",
+            forWhom:
+              "Companies with revenue above R$ 100 million seeking external innovation through strategic investments.",
+          },
+          investmentAdvisory: {
+            title: "Executive Investment Advisory",
+            subtitle: "Executive investment consulting",
+            description:
+              "We advise investment decisions with specialized technical due diligence, technological asset valuation, and portfolio strategies. We structure M&As, negotiate terms, and manage post-acquisition integration for synergy capture.",
+            forWhom:
+              "C-suite of companies considering acquisitions, investments, or strategic partnerships in the innovation ecosystem.",
+          },
+          acceleratorOperations: {
+            title: "Accelerator Design & Operations",
+            subtitle: "Design and operation of accelerators",
+            description:
+              "We create and operate corporate accelerators aligned with the company's strategic objectives. We manage startup selection, executive mentoring, corporate-startup engagement, and demo days to maximize generated value.",
+            forWhom:
+              "Large corporations that want to create their own innovation ecosystem and direct connection with relevant startups.",
+          },
+          ventureBuilding: {
+            title: "Venture Building Studio",
+            subtitle: "New business construction studio",
+            description:
+              "We co-found and develop new businesses using corporate resources and knowledge. We manage from strategic ideation to market validation, team formation, and preparation for scale-up or spin-off.",
+            forWhom:
+              "Companies seeking revenue diversification, exploration of new markets, or creation of strategic spin-offs.",
+          },
+        },
+      },
+    },
+  },
+
   // Benefits section
   benefits: {
     title: "Benefits",
@@ -109,6 +239,13 @@ export const en = {
   // Clients section
   clients: {
     title: "Clients",
+    subtitle:
+      "Companies and organizations that trust Spinova to drive their digital transformation and technological innovation across various market sectors.",
+  },
+
+  // Add this new section after the clients section
+  experience: {
+    title: "Experience",
     subtitle:
       "Companies and organizations that trust Spinova to drive their digital transformation and technological innovation across various market sectors.",
   },

@@ -19,8 +19,9 @@ import { LanguageSwitcher } from "./language-switcher"
 // Navigation items
 const getNavItems = (language: string) => [
   { href: "#pilares", label: t("nav.pillars", language as any) },
+  { href: "#como-atuamos", label: t("nav.howWeWork", language as any) },
   { href: "#beneficios", label: t("nav.benefits", language as any) },
-  { href: "#clientes", label: t("nav.clients", language as any) },
+  { href: "#clientes", label: t("nav.experience", language as any) },
   { href: "#contato", label: t("nav.contact", language as any), mobileOnly: true },
 ]
 
@@ -178,13 +179,18 @@ export default function Navbar() {
       role="banner"
       aria-label="Site navigation"
     >
-      <div className="container flex h-full max-w-screen-2xl items-center justify-between relative">
-        <FadeIn duration="fast">
+      <div className="container flex h-full max-w-screen-2xl items-center justify-between relative" data-nav-container>
+        <FadeIn duration="fast" className="z-10">
           <Link
             href="/"
-            className="flex items-center space-x-2 touch-manipulation"
+            className="flex items-center space-x-2 touch-manipulation transition-transform duration-200 hover:scale-105 active:scale-95"
             aria-label="Spinova - Página inicial"
-            onClick={() => trackEvent("logo_click")}
+            onClick={(e) => {
+              e.preventDefault()
+              window.scrollTo({ top: 0, behavior: "smooth" })
+              trackEvent("logo_click")
+              setIsOpen(false)
+            }}
           >
             <Image
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Spinova%20extented%20white%20logo-quepSGTq5FZuyDy7EPwkwm4aHsnR0r.png"
@@ -206,6 +212,7 @@ export default function Navbar() {
           aria-label="Principal"
           role="navigation"
           id="desktop-navigation"
+          data-nav-desktop
         >
           {navItems
             .filter((item) => !item.mobileOnly) // Exclude mobile-only items
@@ -216,14 +223,17 @@ export default function Navbar() {
                   <a
                     href={item.href}
                     className={cn(
-                      "transition-colors hover:text-primary relative py-1 px-1",
+                      "transition-all duration-200 hover:text-primary relative py-1 px-1",
                       isActive ? "text-primary font-semibold" : "text-foreground/80",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                      "active:scale-95",
                     )}
                     onClick={(e) => {
                       e.preventDefault()
                       handleNavClick(item.href.substring(1), item.href)
                     }}
                     aria-current={isActive ? "page" : undefined}
+                    data-nav-item
                   >
                     {item.label}
                     {isActive && (

@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils"
 import { useState, useEffect } from "react"
 import Hero from "@/components/hero"
 import PilaresSection from "@/components/pilares/pilares-section"
+import ComoAtuamosSection from "@/components/como-atuamos/como-atuamos-section"
 import Features from "@/components/features"
 import Footer from "@/components/footer"
 import ScrollToTop from "@/components/scroll-to-top"
@@ -45,6 +46,7 @@ export default function ClientPage() {
         <main className={cn("transition-all duration-300", scrolled ? "pt-14" : "pt-20")}>
           <Hero />
           <PilaresSection />
+          <ComoAtuamosSection />
           <Features />
         </main>
         <Footer />

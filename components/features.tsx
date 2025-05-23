@@ -188,9 +188,9 @@ export default function Features() {
       >
         <FadeIn className="mx-auto max-w-[58rem] text-center px-4">
           <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">
-            {t("clients.title", language as any)}
+            {t("experience.title", language as any)}
           </h2>
-          <p className="mt-4 text-gray-300 sm:text-lg">{t("clients.subtitle", language as any)}</p>
+          <p className="mt-4 text-gray-300 sm:text-lg">{t("experience.subtitle", language as any)}</p>
         </FadeIn>
         <StaggerChildren
           className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 sm:gap-8 md:gap-10 px-4"

@@ -4,10 +4,12 @@ export const ptBR = {
     pillars: "Pilares",
     benefits: "Benefícios",
     clients: "Clientes",
+    experience: "Experiência",
     contact: "Contato",
     about: "Sobre Nós",
     blog: "Blog",
     privacy: "Privacidade",
+    howWeWork: "Como Atuamos",
   },
 
   // Seção Hero
@@ -67,6 +69,134 @@ export const ptBR = {
     learnMore: "Saiba mais",
   },
 
+  // Seção Como Atuamos
+  howWeWork: {
+    title: "Como Atuamos",
+    subtitle: "Conheça nossas abordagens especializadas para transformar desafios em oportunidades",
+    categories: {
+      software: {
+        title: "Technology Strategy & Orchestration",
+        subtitle: "Arquitetura e coordenação estratégica de soluções tecnológicas",
+        description:
+          "Desenhamos arquiteturas completas e coordenamos implementação de soluções tecnológicas através de parceiros qualificados.",
+        services: {
+          enterpriseSolution: {
+            title: "Enterprise Solution Architecture",
+            subtitle: "Arquitetura estratégica de soluções tecnológicas empresariais",
+            description:
+              "Desenhamos arquiteturas completas de soluções enterprise e coordenamos implementação através de parceiros técnicos qualificados. Atuamos como PMO especializado, garantindo integração, qualidade e alinhamento estratégico em projetos tecnológicos complexos multi-fornecedor.",
+            forWhom:
+              "Empresas iniciando transformações digitais complexas que precisam de coordenação técnica especializada e garantia de sucesso na implementação.",
+          },
+          technologyAdvisory: {
+            title: "Technology Advisory & Due Diligence",
+            subtitle: "Consultoria executiva para decisões tecnológicas estratégicas",
+            description:
+              "Oferecemos análise técnica profunda para decisões de investimento, seleção de fornecedores e avaliação de soluções. Realizamos auditorias tecnológicas, benchmarking de mercado e recomendações estratégicas para maximizar ROI em iniciativas de tecnologia.",
+            forWhom:
+              "C-level avaliando grandes investimentos tecnológicos, empresas considerando aquisições de startups ou organizações selecionando fornecedores estratégicos.",
+          },
+          digitalTransformation: {
+            title: "Digital Transformation PMO",
+            subtitle: "Gestão executiva de programas de transformação digital",
+            description:
+              "Estruturamos e lideramos escritórios de projetos especializados em transformação digital. Coordenamos múltiplos fornecedores, garantimos integração entre sistemas e gerenciamos cronogramas complexos para entregar resultados no prazo e orçamento.",
+            forWhom:
+              "Grandes empresas em transformação digital com múltiplas iniciativas simultâneas que precisam de coordenação central especializada.",
+          },
+          vendorManagement: {
+            title: "Technology Vendor Management",
+            subtitle: "Gestão estratégica de fornecedores de tecnologia",
+            description:
+              "Gerenciamos relacionamentos com fornecedores tecnológicos, coordenamos contratos complexos e garantimos entrega de valor. Realizamos avaliações contínuas de performance e negociamos condições otimizadas para tecnologias críticas.",
+            forWhom:
+              "Empresas com múltiplos fornecedores tecnológicos que precisam de coordenação especializada ou organizações buscando otimização de contratos e relacionamentos.",
+          },
+        },
+      },
+      innovation: {
+        title: "Innovation Catalyst",
+        subtitle: "Inovação estratégica que transforma mercados",
+        description:
+          "Aceleramos a transformação digital através de estratégias de inovação personalizadas e implementação de tecnologias emergentes.",
+        services: {
+          aiImplementation: {
+            title: "AI Strategic Implementation",
+            subtitle: "Implementação estratégica de Inteligência Artificial",
+            description:
+              "Implementamos soluções de IA que geram valor real: desde AI agents customizados e automação cognitiva até computer vision industrial. Desenvolvemos roadmaps de IA corporativa, criamos centros de excelência e garantimos implementação ética e escalável.",
+            forWhom:
+              "Empresas maduras que buscam diferenciação competitiva sustentável através de inteligência artificial aplicada ao core business.",
+          },
+          executiveAdvisory: {
+            title: "Executive AI Advisory",
+            subtitle: "Consultoria executiva em Inteligência Artificial",
+            description:
+              "Capacitamos executivos com conhecimento estratégico sobre IA, separando hype de oportunidades reais. Criamos estratégias de adoção, políticas de governança e frameworks de investimento para posicionar sua empresa como líder tecnológico no setor.",
+            forWhom:
+              "CEOs, CTOs e diretores que precisam de visão estratégica clara sobre como IA impactará seus negócios e como se preparar para o futuro.",
+          },
+          cultureTransformation: {
+            title: "Innovation Culture Transformation",
+            subtitle: "Transformação cultural para inovação",
+            description:
+              "Desenvolvemos ecossistemas de inovação internos com processos estruturados, metodologias ágeis em escala e programas de intraempreendedorismo. Implementamos labs de inovação, design thinking executivo e métricas de experimentação.",
+            forWhom:
+              "Corporações tradicionais em processo de transformação digital que precisam acelerar capacidade de inovação interna.",
+          },
+          emergingTech: {
+            title: "Emerging Tech Lab",
+            subtitle: "Laboratório de tecnologias emergentes",
+            description:
+              "Pesquisamos, validamos e implementamos tecnologias de ponta: blockchain enterprise, IoT industrial, digital twins e extended reality. Mantemos parcerias com universidades e centros de pesquisa para acesso antecipado a inovações.",
+            forWhom:
+              "Empresas que querem estar na vanguarda tecnológica e explorar oportunidades em tecnologias emergentes antes da concorrência.",
+          },
+        },
+      },
+      venture: {
+        title: "Venture Partners",
+        subtitle: "Estratégias de capital e crescimento acelerado",
+        description:
+          "Oferecemos serviços especializados em investimentos estratégicos, corporate venture capital e aceleração de startups.",
+        services: {
+          corporateVenture: {
+            title: "Corporate Venture Program",
+            subtitle: "Programas de Corporate Venture Capital",
+            description:
+              "Estruturamos e operamos fundos CVC alinhados à estratégia corporativa. Gerenciamos desde sourcing de startups até due diligence técnica, negociação de deals e integração com unidades de negócio. Criamos radar tecnológico através do portfólio de investimentos.",
+            forWhom:
+              "Empresas com faturamento acima de R$ 100 milhões que buscam inovação externa através de investimentos estratégicos.",
+          },
+          investmentAdvisory: {
+            title: "Executive Investment Advisory",
+            subtitle: "Consultoria executiva em investimentos",
+            description:
+              "Assessoramos decisões de investimento com due diligence técnica especializada, valoração de ativos tecnológicos e estratégias de portfólio. Estruturamos M&As, negociamos termos e gerenciamos integração pós-aquisição para captura de sinergias.",
+            forWhom:
+              "C-suite de empresas considerando aquisições, investimentos ou parcerias estratégicas no ecossistema de inovação.",
+          },
+          acceleratorOperations: {
+            title: "Accelerator Design & Operations",
+            subtitle: "Design e operação de aceleradoras",
+            description:
+              "Criamos e operamos aceleradoras corporativas alinhadas aos objetivos estratégicos da empresa. Gerenciamos seleção de startups, mentoria executiva, corporate-startup engagement e demo days para maximizar valor gerado.",
+            forWhom:
+              "Grandes corporações que querem criar ecossistema próprio de inovação e conexão direta com startups relevantes.",
+          },
+          ventureBuilding: {
+            title: "Venture Building Studio",
+            subtitle: "Estúdio de construção de novos negócios",
+            description:
+              "Co-fundamos e desenvolvemos novos negócios usando recursos e conhecimento corporativo. Gerenciamos desde ideação estratégica até validação de mercado, formação de equipes e preparação para scale-up ou spin-off.",
+            forWhom:
+              "Empresas buscando diversificação de receita, exploração de novos mercados ou criação de spin-offs estratégicos.",
+          },
+        },
+      },
+    },
+  },
+
   // Seção Benefícios
   benefits: {
     title: "Benefícios",
@@ -109,6 +239,13 @@ export const ptBR = {
   // Seção Clientes
   clients: {
     title: "Clientes",
+    subtitle:
+      "Empresas e organizações que confiam na Spinova para impulsionar sua transformação digital e inovação tecnológica em diversos setores do mercado.",
+  },
+
+  // Add this new section after the clients section
+  experience: {
+    title: "Experiência",
     subtitle:
       "Empresas e organizações que confiam na Spinova para impulsionar sua transformação digital e inovação tecnológica em diversos setores do mercado.",
   },
