@@ -703,3 +703,195 @@ html {
     display: none;
   }
 }
+
+/* Enhanced mobile menu animations */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%) translateY(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) translateY(-50%);
+    opacity: 1;
+  }
+}
+
+@keyframes menuItemSlideIn {
+  from {
+    transform: translateX(30px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes menuItemSlideOut {
+  from {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(30px) scale(0.95);
+    opacity: 0;
+  }
+}
+
+@keyframes overlayFadeInEnhanced {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    background: transparent;
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
+  }
+}
+
+@keyframes overlayFadeOutEnhanced {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
+  }
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    background: transparent;
+  }
+}
+
+@keyframes menuSlideIn {
+  from {
+    transform: translateX(100%);
+    box-shadow: none;
+  }
+  to {
+    transform: translateX(0);
+    box-shadow: -10px 0 50px rgba(0, 0, 0, 0.3), -5px 0 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes menuSlideOut {
+  from {
+    transform: translateX(0);
+    box-shadow: -10px 0 50px rgba(0, 0, 0, 0.3), -5px 0 20px rgba(0, 0, 0, 0.1);
+  }
+  to {
+    transform: translateX(100%);
+    box-shadow: none;
+  }
+}
+
+@keyframes rippleEffect {
+  from {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes buttonShine {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Enhanced mobile menu item interactions */
+.mobile-menu-item {
+  position: relative;
+  overflow: hidden;
+  transform-origin: center;
+}
+
+.mobile-menu-item::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mobile-menu-item:active::before {
+  width: 200px;
+  height: 200px;
+  animation: rippleEffect 0.6s ease-out;
+}
+
+/* Improved hamburger animation with spring effect */
+.hamburger-line {
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.3s ease, background-color 0.2s ease;
+  transform-origin: center;
+}
+
+/* Enhanced mobile menu responsiveness */
+@media (max-width: 768px) {
+  /* Improved touch feedback */
+  .mobile-menu-item:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  /* Better visual hierarchy */
+  [data-mobile-menu] {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Smooth menu transitions */
+  .mobile-menu-enter {
+    animation: menuSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  .mobile-menu-exit {
+    animation: menuSlideOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  /* Enhanced overlay animations */
+  .mobile-menu-overlay-enter {
+    animation: overlayFadeInEnhanced 0.5s ease forwards;
+  }
+
+  .mobile-menu-overlay-exit {
+    animation: overlayFadeOutEnhanced 0.3s ease forwards;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-item,
+  .hamburger-line,
+  [data-mobile-menu] {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .mobile-menu-item {
+    border: 1px solid currentColor;
+  }
+
+  .mobile-menu-item:hover,
+  .mobile-menu-item:focus {
+    background-color: currentColor;
+    color: var(--background);
+  }
+}

@@ -366,12 +366,13 @@ export default function Navbar() {
         <div
           className={cn(
             "fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden",
-            "transition-opacity duration-300 ease-in-out",
-            isOpen ? "opacity-100" : "opacity-0 pointer-events-none",
+            "transition-all duration-500 ease-out",
+            isOpen ? "opacity-100 backdrop-blur-md" : "opacity-0 pointer-events-none backdrop-blur-none",
           )}
           style={{
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
+            backdropFilter: isOpen ? "blur(12px)" : "blur(0px)",
+            WebkitBackdropFilter: isOpen ? "blur(12px)" : "blur(0px)",
+            background: isOpen ? "linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%)" : "transparent",
           }}
           aria-hidden="true"
           role="presentation"
@@ -383,23 +384,29 @@ export default function Navbar() {
           id="mobile-menu"
           ref={mobileMenuRef}
           className={cn(
-            "fixed inset-y-0 right-0 z-50 w-full sm:max-w-sm bg-background shadow-xl md:hidden overscroll-contain",
+            "fixed inset-y-0 right-0 z-50 w-full sm:max-w-sm bg-background shadow-2xl md:hidden overscroll-contain",
+            "flex flex-col h-[100dvh] max-h-[100dvh] border-l border-border/20",
             isOpen ? "translate-x-0" : "translate-x-full",
-            "flex flex-col h-[100dvh] max-h-[100dvh]",
           )}
           style={{
-            transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+            transition: "transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
             height: "100dvh",
             maxHeight: "100dvh",
             display: "flex",
             flexDirection: "column",
+            boxShadow: isOpen ? "-10px 0 50px rgba(0, 0, 0, 0.3), -5px 0 20px rgba(0, 0, 0, 0.1)" : "none",
           }}
           role="dialog"
           aria-modal="true"
           aria-labelledby="mobile-menu-title"
           data-mobile-menu
         >
-          <div className={cn("flex flex-col h-full", isOpen ? "mobile-menu-content-enter" : "opacity-0")}>
+          <div
+            className={cn("flex flex-col h-full relative overflow-hidden", isOpen ? "animate-in" : "animate-out")}
+            style={{
+              background: "linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--background)/0.98) 100%)",
+            }}
+          >
             <span id="mobile-menu-title" className="sr-only">
               Menu de navegação
             </span>
@@ -446,23 +453,19 @@ export default function Navbar() {
               }}
             >
               <div className="flex flex-col justify-center min-h-[50vh]">
-                <ul
-                  className="space-y-4 w-full max-w-md mx-auto"
-                  role="menu"
-                  style={{
-                    transition: "opacity 0.4s ease",
-                    opacity: isOpen ? 1 : 0,
-                  }}
-                >
+                <ul className="space-y-2 w-full max-w-md mx-auto" role="menu">
                   {navItems.map((item, index) => {
                     const isActive = activeSection === item.href.substring(1)
+                    const animationDelay = isOpen ? index * 80 : (navItems.length - index) * 40
+
                     return (
                       <li
                         key={index}
                         className="w-full"
                         style={{
-                          transition: `transform 0.3s ease ${index * 0.05}s, opacity 0.3s ease ${index * 0.05}s`,
-                          transform: isOpen ? "translateY(0)" : "translateY(20px)",
+                          transition: `all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)`,
+                          transitionDelay: `${animationDelay}ms`,
+                          transform: isOpen ? "translateX(0) scale(1)" : "translateX(30px) scale(0.95)",
                           opacity: isOpen ? 1 : 0,
                         }}
                         role="none"
@@ -470,9 +473,9 @@ export default function Navbar() {
                         <a
                           href={item.href}
                           className={cn(
-                            "flex items-center justify-between py-3 px-4 rounded-md transition-all duration-200 touch-manipulation text-lg",
-                            "hover:bg-gray-100/10 active:bg-gray-100/20 active:scale-[0.98]",
-                            isActive ? "bg-primary/10 text-primary font-medium" : "text-foreground/80",
+                            "flex items-center justify-between py-4 px-5 rounded-xl transition-all duration-300 touch-manipulation text-lg group relative overflow-hidden",
+                            "hover:bg-primary/5 active:bg-primary/10 active:scale-[0.98]",
+                            isActive ? "bg-primary/10 text-primary font-medium shadow-sm" : "text-foreground/80",
                           )}
                           onClick={(e) => {
                             e.preventDefault()
@@ -481,13 +484,27 @@ export default function Navbar() {
                           aria-current={isActive ? "page" : undefined}
                           role="menuitem"
                         >
-                          <span className="text-lg font-medium">{item.label}</span>
+                          {/* Ripple effect background */}
+                          <div className="absolute inset-0 bg-primary/5 scale-0 group-active:scale-100 transition-transform duration-300 rounded-xl" />
+
+                          <span className="text-lg font-medium relative z-10">{item.label}</span>
                           <ArrowRight
                             className={cn(
-                              "h-5 w-5 transition-transform duration-200 group-hover:translate-x-1",
+                              "h-5 w-5 transition-all duration-300 relative z-10",
+                              "group-hover:translate-x-1 group-hover:scale-110",
                               isActive ? "text-primary" : "opacity-70",
                             )}
                           />
+
+                          {/* Active indicator */}
+                          {isActive && (
+                            <div
+                              className="absolute left-0 top-1/2 w-1 h-8 bg-primary rounded-r-full transform -translate-y-1/2"
+                              style={{
+                                animation: "slideInLeft 0.3s ease-out forwards",
+                              }}
+                            />
+                          )}
                         </a>
                       </li>
                     )
@@ -497,11 +514,24 @@ export default function Navbar() {
             </nav>
 
             <div
-              className="p-6 sm:p-8 border-t menu-item-appear"
-              style={{ animationDelay: `${(navItems.length + 1) * 80}ms` }}
+              className="p-6 sm:p-8 border-t border-border/20 relative"
+              style={{
+                transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                transitionDelay: isOpen ? `${(navItems.length + 1) * 80}ms` : "0ms",
+                transform: isOpen ? "translateY(0) scale(1)" : "translateY(20px) scale(0.95)",
+                opacity: isOpen ? 1 : 0,
+              }}
               role="complementary"
               aria-label="Contato"
             >
+              {/* Subtle glow effect */}
+              <div
+                className={cn(
+                  "absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent rounded-t-xl transition-opacity duration-500",
+                  isOpen ? "opacity-100" : "opacity-0",
+                )}
+              />
+
               <a
                 href="mailto:contato@spinova.org.br"
                 onClick={(e) => {
@@ -509,12 +539,15 @@ export default function Navbar() {
                   window.location.href = "mailto:contato@spinova.org.br"
                   handleContactClick()
                 }}
-                className="flex items-center justify-center w-full py-4 px-5 rounded-md bg-white text-black hover:bg-gray-100 transition-colors touch-manipulation mobile-menu-item"
+                className="flex items-center justify-center w-full py-4 px-6 rounded-xl bg-white text-black hover:bg-gray-100 transition-all duration-300 touch-manipulation mobile-menu-item group relative overflow-hidden shadow-lg hover:shadow-xl"
                 role="button"
                 aria-label="Enviar email para contato@spinova.org.br"
               >
-                <span className="font-medium text-lg">{t("nav.contact", language as any)}</span>
-                <ArrowRight className="ml-2 h-5 w-5" />
+                {/* Button shine effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+
+                <span className="font-medium text-lg relative z-10">{t("nav.contact", language as any)}</span>
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 group-hover:scale-110 transition-all duration-300 relative z-10" />
               </a>
             </div>
           </div>
