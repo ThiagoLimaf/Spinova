@@ -151,7 +151,11 @@ export default function RootLayout({
                 name: "Spinova",
                 url: "https://spinova.solutions",
                 logo: "https://spinova.solutions/logo.png",
-                sameAs: ["https://www.linkedin.com/company/spinova-ict", "https://github.com/spinova"],
+                sameAs: [
+                  "https://www.linkedin.com/company/spinova-ict",
+                  "https://github.com/spinova",
+                  "https://spinova.solutions/partners",
+                ],
                 contactPoint: {
                   "@type": "ContactPoint",
                   telephone: "+55-48-98826-7335",

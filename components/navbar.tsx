@@ -21,7 +21,7 @@ const getNavItems = (language: string) => [
   { href: "#pilares", label: t("nav.pillars", language as any) },
   { href: "#como-atuamos", label: t("nav.howWeWork", language as any) },
   { href: "#beneficios", label: t("nav.benefits", language as any) },
-  { href: "#clientes", label: t("nav.experience", language as any) },
+  { href: "#clientes", label: t("nav.partners", language as any) },
   { href: "#contato", label: t("nav.contact", language as any), mobileOnly: true },
 ]
 

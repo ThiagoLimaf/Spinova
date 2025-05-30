@@ -4,7 +4,7 @@ export const en = {
     pillars: "Pillars",
     benefits: "Benefits",
     clients: "Clients",
-    experience: "Experience",
+    partners: "Partners", // Change from "Experience" to "Partners"
     contact: "Contact",
     about: "About Us",
     blog: "Blog",
@@ -244,10 +244,121 @@ export const en = {
   },
 
   // Add this new section after the clients section
-  experience: {
-    title: "Experience",
+  partners: {
+    title: "Partners",
     subtitle:
       "Companies and organizations that trust Spinova to drive their digital transformation and technological innovation across various market sectors.",
+  },
+
+  // Partners page
+  partnersPage: {
+    title: "Partners",
+    subtitle:
+      "Meet the companies and organizations that collaborate with us to drive innovation and digital transformation",
+    description:
+      "Our partner network is fundamental to the success of the projects we develop. We work in close collaboration with leading companies from various sectors, combining complementary expertise to deliver innovative and high-impact solutions.",
+    featuredTitle: "Strategic Partners",
+    companiesTitle: "Companies We Work With",
+    companiesSubtitle: "Meet other companies and organizations with which we develop innovative projects and solutions",
+    backToHome: "← Back to homepage",
+    partnerships: {
+      // Featured Partners
+      databizz: {
+        name: "DATABIZZ",
+        description:
+          "Strategic partnership in Business Intelligence solutions and data analysis, developing advanced dashboards and data-driven decision-making systems.",
+      },
+      chez: {
+        name: "CHEZ",
+        description:
+          "Strategic collaboration in technological solutions and consulting for enterprise process optimization, focusing on digital transformation and operational efficiency.",
+      },
+      navega: {
+        name: "Navega",
+        description:
+          "Partnership in developing digital navigation solutions and user experience, creating intuitive interfaces and optimized digital journeys.",
+      },
+      npmp: {
+        name: "NPMP",
+        description:
+          "Collaboration in project management and agile methodologies, implementing governance frameworks and continuous improvement processes for organizations.",
+      },
+      // Additional Companies
+      idexo: {
+        name: "iDEXO",
+        description:
+          "Strategic partnership in innovation and development of advanced technological solutions for enterprise digital transformation.",
+      },
+      acqio: {
+        name: "Acqio",
+        description:
+          "Collaboration in developing digital payment solutions and financial infrastructure for startups and enterprises.",
+      },
+      elcoma: {
+        name: "Elcoma Networks",
+        description:
+          "Partnership in network infrastructure and connectivity solutions for IoT projects and digital transformation.",
+      },
+      pti: {
+        name: "Itaipu Technology Park",
+        description:
+          "Institutional partner in research and development, providing access to laboratories and R&D infrastructure.",
+      },
+      creativepack: {
+        name: "Creative Pack",
+        description: "Collaboration in creative design and visual identity development for innovation projects.",
+      },
+      shopping: {
+        name: "Shopping Recife",
+        description:
+          "Digital transformation project in retail, implementing customer experience solutions and analytics.",
+      },
+      findup: {
+        name: "FindUP",
+        description: "Partnership in developing intelligent search solutions and talent matching for the tech market.",
+      },
+      safetec: {
+        name: "Safetec",
+        description:
+          "Partnership in digital security and development of protection solutions for corporate environments.",
+      },
+      hering: {
+        name: "Hering",
+        description:
+          "Digital transformation project in fashion retail, implementing omnichannel and advanced analytics.",
+      },
+      enviou: {
+        name: "Enviou",
+        description: "Collaboration in digital marketing and development of engagement platforms for startups.",
+      },
+      arkadium: {
+        name: "Arkadium",
+        description: "Partnership in digital game development and gamification solutions for enterprises.",
+      },
+      meudim: {
+        name: "MeuDimDim",
+        description:
+          "Development of fintech solutions and implementation of microservices architectures for scalability.",
+      },
+      liga: {
+        name: "LIGA Ventures",
+        description:
+          "Strategic partnership in venture capital and startup acceleration, sharing expertise in innovation.",
+      },
+      mrcat: {
+        name: "Mr.Cat",
+        description:
+          "Digital transformation in pet e-commerce, implementing AI for personalization and sales optimization.",
+      },
+      fca: {
+        name: "FCA",
+        description: "Automotive innovation projects, developing IoT and connected car solutions for the industry.",
+      },
+      nickelpay: {
+        name: "Nickelpay",
+        description: "Development of payment infrastructure and compliance solutions for emerging fintechs.",
+      },
+    },
   },
 
   // Footer

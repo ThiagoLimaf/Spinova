@@ -184,7 +184,7 @@ export default function Footer() {
                   className="text-gray-400 transition-colors hover:text-white block py-2 touch-manipulation"
                   onClick={(e) => handleSectionClick(e, "clientes")}
                 >
-                  {t("nav.experience", language as any)}
+                  {t("nav.partners", language as any)}
                 </a>
               </li>
               <li>

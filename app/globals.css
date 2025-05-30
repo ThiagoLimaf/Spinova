@@ -340,6 +340,7 @@
     overflow: hidden;
     position: fixed;
     width: 100%;
+    height: 100%;
   }
 
   /* Improved mobile menu layout */
@@ -893,5 +894,218 @@ html {
   .mobile-menu-item:focus {
     background-color: currentColor;
     color: var(--background);
+  }
+}
+
+/* Enhanced partner section styling */
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .partners-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+    max-width: 64rem;
+  }
+}
+
+/* Partner logo hover effects */
+.partner-logo-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.partner-logo-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.partner-logo-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.partner-logo-container:hover::before {
+  left: 100%;
+}
+
+/* Responsive partner section adjustments */
+@media (max-width: 640px) {
+  .partners-grid {
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .partner-logo-container {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .partners-grid {
+    gap: 2.5rem;
+  }
+
+  .partner-logo-container {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .partner-logo-container {
+    padding: 2.5rem 2rem;
+  }
+}
+
+/* Enhanced partner page styling */
+.featured-partners-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .featured-partners-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+  }
+}
+
+/* Transparent partner logo containers */
+.partner-logo-transparent {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 1.5rem;
+}
+
+.partner-logo-transparent:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Companies section styling */
+.companies-section {
+  background: linear-gradient(135deg, rgba(249, 250, 251, 0.3) 0%, rgba(243, 244, 246, 0.5) 100%);
+}
+
+.dark .companies-section {
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.3) 0%, rgba(31, 41, 55, 0.5) 100%);
+}
+
+/* Company card enhancements */
+.company-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .company-card {
+  background: rgba(17, 24, 39, 0.8);
+  border: 1px solid rgba(55, 65, 81, 0.3);
+}
+
+.company-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.dark .company-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments for partners page */
+@media (max-width: 640px) {
+  .featured-partners-grid {
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .partner-logo-transparent {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .featured-partners-grid {
+    gap: 2.5rem;
+  }
+
+  .partner-logo-transparent {
+    padding: 1.25rem;
+  }
+}
+
+/* Section dividers */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+  margin: 4rem 0;
+}
+
+.dark .section-divider {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+/* Enhanced animations for partners page */
+@keyframes logoFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.partner-logo-transparent:hover img {
+  animation: logoFloat 2s ease-in-out infinite;
+}
+
+/* Grid layout improvements */
+.partners-responsive-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .partners-responsive-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .partners-responsive-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
   }
 }

@@ -4,98 +4,31 @@ import { TrendingUp, Award, Handshake, Puzzle, FlaskRound, Target, ArrowRight } 
 import Image from "next/image"
 import { trackEvent } from "./event-tracking"
 import { FadeIn } from "./animations/fade-in"
-import { StaggerChildren } from "./animations/stagger-children"
 import { useLanguage } from "@/contexts/language-context"
 import { t } from "@/utils/translate"
+import Link from "next/link"
 
-// All client logos with their URLs
+// Selected partner logos for main section display
 const clients = [
-  // Original logos
   {
-    name: "iDEXO",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-13-YvDAUtnY5qVmMOtAbmaUwbkHFcijyE.png",
-    alt: "iDEXO logo - Parceiro de inovação da Spinova",
-  },
-  {
-    name: "Acqio",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-15-bu9h5enEGOEYFlK0FfF8fp06N0qdfn.png",
-    alt: "Acqio logo - Cliente Spinova em soluções de pagamento",
-  },
-  {
-    name: "Elcoma Networks",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-12-MYeUmYODl9xGEHoKreRWyJJsdJEqN4.png",
-    alt: "Elcoma Networks logo - Parceiro de tecnologia da Spinova",
-  },
-  {
-    name: "PTI",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-16-V0fzRAwLxVFIxoAw1rMB3x8jpuRqWG.png",
-    alt: "Parque Tecnológico Itaipu logo - Parceiro institucional da Spinova",
-  },
-  {
-    name: "Creative Pack",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-14-oFDU0wItNJ8Li0mXNe0kgclYXAA4aq.png",
-    alt: "Creative Pack logo - Cliente Spinova em soluções criativas",
-  },
-  {
-    name: "Shopping Recife",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-8-smkCRmrXAEO1vTEY4DuO0B72NsIzWC.png",
-    alt: "Shopping Recife logo - Cliente Spinova em transformação digital",
-  },
-  {
-    name: "FindUP",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-11-ETisvZxPb0FreQz39HSYk9r8upSqck.png",
-    alt: "FindUP logo - Parceiro de inovação da Spinova",
+    name: "DATABIZZ",
+    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DATABIZZ%20Logo-WaRwxqT0istlkzgNM4uqRBNtVVeGqE.png",
+    alt: "DATABIZZ logo - Parceiro em Business Intelligence da Spinova",
   },
   {
     name: "CHEZ",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-9-XwCboE4phmGRrgXSZxtj8pMrjzv7Ad.png",
-    alt: "CHEZ logo - Cliente Spinova em soluções tecnológicas",
+    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Chez%20Logo%20branca-IjwofXzgVIVS4JQM1stlAoADn2qRBp.png",
+    alt: "CHEZ logo - Parceiro estratégico em soluções tecnológicas da Spinova",
   },
   {
-    name: "Safetec",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-10-lLzFtQhPcnGU707CJeBKk2FwtHrpTF.png",
-    alt: "Safetec logo - Parceiro de segurança da Spinova",
-  },
-  // New logos
-  {
-    name: "Hering",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-3-7TvDcJ0MygMopMSPgLdo2tHFh0zJOt.png",
-    alt: "Hering logo - Cliente Spinova em transformação digital no varejo",
+    name: "Navega",
+    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Navega%20Logo-mc3F5eL0pwjHkEYpfuUN4iNd8p3X5l.png",
+    alt: "Navega logo - Parceiro em experiência digital da Spinova",
   },
   {
-    name: "Enviou",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-7-JEKnMWzQWAojQrZiEz3iJpNk2X78Nc.png",
-    alt: "Enviou logo - Parceiro de marketing da Spinova",
-  },
-  {
-    name: "Arkadium",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-5-sh1x4IBhmLXX236RI9inpll6kwpA9d.png",
-    alt: "Arkadium logo - Cliente Spinova em soluções de software",
-  },
-  {
-    name: "MeuDimDim",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-4-UPVlUMjN9KEmSmmWzhDOi3fm9EeCgG.png",
-    alt: "MeuDimDim logo - Cliente Spinova em soluções financeiras",
-  },
-  {
-    name: "LIGA Ventures",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-6-XxFKhRbFjrS6cxVRUBexz8vbP9sYC0.png",
-    alt: "LIGA Ventures logo - Parceiro de venture capital da Spinova",
-  },
-  {
-    name: "Mr.Cat",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-1-H50dErtDnppMwtw8Y2CY6ywf91HUw9.png",
-    alt: "Mr.Cat logo - Cliente Spinova em transformação digital no varejo",
-  },
-  {
-    name: "FCA",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-2-GqIzVHv1WEndfH0YAkVRur3FgC07Ck.png",
-    alt: "FCA logo - Cliente Spinova em soluções automotivas",
-  },
-  {
-    name: "Nickelpay",
-    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-eHXQasOsrh63bIjGso9Zcvbl7XQ9ZK.png",
-    alt: "Nickelpay logo - Cliente Spinova em soluções de pagamento",
+    name: "NPMP",
+    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/NPMP%20Logo-JsoutsCy8VbwxHP6VdZZrPWEIKvFui.png",
+    alt: "NPMP logo - Parceiro em gestão de projetos da Spinova",
   },
 ]
 
@@ -188,31 +121,41 @@ export default function Features() {
       >
         <FadeIn className="mx-auto max-w-[58rem] text-center px-4">
           <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-5xl">
-            {t("experience.title", language as any)}
+            {t("partners.title", language as any)}
           </h2>
-          <p className="mt-4 text-gray-300 sm:text-lg">{t("experience.subtitle", language as any)}</p>
+          <p className="mt-4 text-gray-300 sm:text-lg">{t("partners.subtitle", language as any)}</p>
         </FadeIn>
-        <StaggerChildren
-          className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 sm:gap-8 md:gap-10 px-4"
-          staggerDelay={50}
-          initialDelay={300}
-        >
-          {clients.map((client) => (
-            <div
+        <div className="partners-grid">
+          {clients.map((client, index) => (
+            <FadeIn
               key={client.name}
-              className="flex items-center justify-center p-4 transition-all duration-300 hover:opacity-80"
+              delay={300 + index * 100}
+              className="partner-logo-container flex items-center justify-center"
             >
               <Image
                 src={client.logo || "/placeholder.svg"}
                 alt={client.alt}
-                width={140}
-                height={70}
-                className="max-h-10 w-auto object-contain"
+                width={160}
+                height={80}
+                className="max-h-12 w-auto object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"
                 loading="lazy"
               />
-            </div>
+            </FadeIn>
           ))}
-        </StaggerChildren>
+        </div>
+        <FadeIn className="flex justify-center mt-8 sm:mt-12 px-4" delay={600}>
+          <Link
+            href="/partners"
+            className="group inline-flex items-center px-4 py-3 sm:px-6 sm:py-4 text-base font-medium rounded-md bg-white text-black hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 active:bg-gray-200 touch-manipulation"
+            onClick={() => trackEvent("partners_cta_click", { location: "partners_section" })}
+          >
+            <span>{language === "en" ? "Learn More" : "Saiba Mais"}</span>
+            <ArrowRight
+              className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300"
+              aria-hidden="true"
+            />
+          </Link>
+        </FadeIn>
       </section>
     </>
   )
