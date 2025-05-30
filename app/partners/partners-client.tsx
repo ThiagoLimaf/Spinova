@@ -37,28 +37,8 @@ export default function PartnersClient() {
 
   // Partner logos data with source URLs - Complete collection
   const partnerLogos = [
-    // Featured partner logos - reintroduced
-    {
-      name: "DATABIZZ",
-      url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DATABIZZ%20Logo-SDAig1HSVIEewZ0WKAHsATIwIAVrRt.png",
-      alt: "DATABIZZ logo - Business Intelligence partner of Spinova",
-    },
-    {
-      name: "Navega",
-      url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Navega%20Logo-0PpBPLLmjaBPUxZqUACKAU8WcYGc86.png",
-      alt: "Navega logo - Digital navigation partner of Spinova",
-    },
-    {
-      name: "CHEZ",
-      url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Chez%20Logo%20branca-lhazR36WBVQGsc2YkCqOwYuu5Fy7HT.png",
-      alt: "CHEZ logo - Strategic technology partner of Spinova",
-    },
-    {
-      name: "NPMP",
-      url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/NPMP%20Logo-YrQAbhKb6kDBUdcaAbwUGQOjTaPpb0.png",
-      alt: "NPMP logo - Project management partner of Spinova",
-    },
-    // Existing logos
+    // Remove the first four featured partner logos from this grid
+    // Featured partner logos are now only shown in the hero section above
     {
       name: "acqio",
       url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-15-R50w6gPHr2haZMjJPXR026UecqF0iT.png",
@@ -192,12 +172,10 @@ export default function PartnersClient() {
           {/* Transparent Partner Logos Grid */}
           <section className="container py-8 px-4 sm:px-6">
             <FadeIn className="mb-12">
-              <h2 className="text-2xl font-bold text-center mb-6">Rede de Transformação</h2>
+              <h2 className="text-2xl font-bold text-center mb-6">Ecossistema Completo</h2>
               <p className="mx-auto max-w-[42rem] text-center text-muted-foreground">
-                Através dos nossos parceiros estratégicos, levamos inovação e soluções tecnológicas para dezenas de
-                organizações adicionais. Esta rede ampliada demonstra como nossas metodologias e expertise se
-                multiplicam, criando um ecossistema de transformação digital que vai além das fronteiras diretas da
-                Spinova.
+                Nossa rede completa de parceiros multiplica o alcance das soluções Spinova, levando inovação e
+                transformação digital para organizações em diversos setores e mercados.
               </p>
             </FadeIn>
 
