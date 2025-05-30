@@ -24,7 +24,7 @@ export default function ComoAtuamosSection() {
   // Get services for each category from translations
   const getServicesForCategory = (categoryKey: string) => {
     const serviceKeys = {
-      software: ["enterpriseSolution", "technologyAdvisory", "digitalTransformation", "vendorManagement"],
+      software: ["vendorManagement", "technologyAdvisory", "digitalTransformation", "enterpriseSolution"],
       innovation: ["aiImplementation", "executiveAdvisory", "cultureTransformation", "emergingTech"],
       venture: ["corporateVenture", "investmentAdvisory", "acceleratorOperations", "ventureBuilding"],
     }
