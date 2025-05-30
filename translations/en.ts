@@ -4,8 +4,7 @@ export const en = {
     pillars: "Pillars",
     benefits: "Benefits",
     clients: "Clients",
-    partners: "Partners",
-    partnersPage: "Partners", // Add this new translation
+    partners: "Partners", // Change from "Experience" to "Partners"
     contact: "Contact",
     about: "About Us",
     blog: "Blog",

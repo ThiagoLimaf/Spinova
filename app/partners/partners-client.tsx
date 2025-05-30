@@ -7,11 +7,6 @@ import { FadeIn } from "@/components/animations/fade-in"
 import { StaggerChildren } from "@/components/animations/stagger-children"
 import { useLanguage } from "@/contexts/language-context"
 import { t } from "@/utils/translate"
-import { ActiveSectionProvider } from "@/components/active-section-observer"
-import { MobileMenuProvider } from "@/components/mobile-menu-provider"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import ScrollToTop from "@/components/scroll-to-top"
 
 export default function PartnersClient() {
   const { language } = useLanguage()
@@ -42,8 +37,28 @@ export default function PartnersClient() {
 
   // Partner logos data with source URLs - Complete collection
   const partnerLogos = [
-    // Remove the first four featured partner logos from this grid
-    // Featured partner logos are now only shown in the hero section above
+    // Featured partner logos - reintroduced
+    {
+      name: "DATABIZZ",
+      url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DATABIZZ%20Logo-SDAig1HSVIEewZ0WKAHsATIwIAVrRt.png",
+      alt: "DATABIZZ logo - Business Intelligence partner of Spinova",
+    },
+    {
+      name: "Navega",
+      url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Navega%20Logo-0PpBPLLmjaBPUxZqUACKAU8WcYGc86.png",
+      alt: "Navega logo - Digital navigation partner of Spinova",
+    },
+    {
+      name: "CHEZ",
+      url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Chez%20Logo%20branca-lhazR36WBVQGsc2YkCqOwYuu5Fy7HT.png",
+      alt: "CHEZ logo - Strategic technology partner of Spinova",
+    },
+    {
+      name: "NPMP",
+      url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/NPMP%20Logo-YrQAbhKb6kDBUdcaAbwUGQOjTaPpb0.png",
+      alt: "NPMP logo - Project management partner of Spinova",
+    },
+    // Existing logos
     {
       name: "acqio",
       url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-15-R50w6gPHr2haZMjJPXR026UecqF0iT.png",
@@ -128,110 +143,100 @@ export default function PartnersClient() {
   ]
 
   return (
-    <ActiveSectionProvider>
-      <MobileMenuProvider>
-        <div className="relative min-h-screen">
-          <Navbar />
+    <div className="relative min-h-screen">
+      {/* Background gradients */}
+      <div className="pointer-events-none fixed inset-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+        <div className="absolute right-0 top-0 h-[500px] w-[500px] bg-blue-500/10 blur-[100px]" />
+        <div className="absolute bottom-0 left-0 h-[500px] w-[500px] bg-purple-500/10 blur-[100px]" />
+      </div>
 
-          {/* Background gradients */}
-          <div className="pointer-events-none fixed inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
-            <div className="absolute right-0 top-0 h-[500px] w-[500px] bg-blue-500/10 blur-[100px]" />
-            <div className="absolute bottom-0 left-0 h-[500px] w-[500px] bg-purple-500/10 blur-[100px]" />
-          </div>
-
-          <div className="relative z-10">
-            <main className="pt-20">
-              {/* Hero Section with Description */}
-              <section className="container flex flex-col items-center justify-center space-y-8 py-24 text-center md:py-32 px-4 sm:px-6">
-                <FadeIn>
-                  <h1 className="bg-gradient-to-br from-foreground from-30% via-foreground/90 to-foreground/70 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl md:text-6xl">
-                    {t("partnersPage.title", language as any)}
-                  </h1>
-                </FadeIn>
-                <FadeIn delay={200}>
-                  <p className="mx-auto max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-                    {t("partnersPage.subtitle", language as any)}
-                  </p>
-                </FadeIn>
-                <FadeIn delay={300} className="w-full max-w-4xl">
-                  <StaggerChildren
-                    className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto"
-                    staggerDelay={100}
+      <div className="relative z-10">
+        <main className="pt-20">
+          {/* Hero Section with Description */}
+          <section className="container flex flex-col items-center justify-center space-y-8 py-24 text-center md:py-32 px-4 sm:px-6">
+            <FadeIn>
+              <h1 className="bg-gradient-to-br from-foreground from-30% via-foreground/90 to-foreground/70 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl md:text-6xl">
+                {t("partnersPage.title", language as any)}
+              </h1>
+            </FadeIn>
+            <FadeIn delay={200}>
+              <p className="mx-auto max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
+                {t("partnersPage.subtitle", language as any)}
+              </p>
+            </FadeIn>
+            <FadeIn delay={300} className="w-full max-w-4xl">
+              <StaggerChildren
+                className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto"
+                staggerDelay={100}
+              >
+                {featuredPartners.map((partner, index) => (
+                  <div
+                    key={partner.name}
+                    className="aspect-[16/9] flex items-center justify-center p-4 md:p-6 rounded-lg bg-transparent border border-white/10 backdrop-blur-sm hover:border-white/20 hover:bg-white/5 transition-all duration-300 group"
                   >
-                    {featuredPartners.map((partner, index) => (
-                      <div
-                        key={partner.name}
-                        className="aspect-[16/9] flex items-center justify-center p-4 md:p-6 rounded-lg bg-transparent border border-white/10 backdrop-blur-sm hover:border-white/20 hover:bg-white/5 transition-all duration-300 group"
-                      >
-                        <Image
-                          src={partner.url || "/placeholder.svg"}
-                          alt={partner.alt}
-                          width={160}
-                          height={90}
-                          className="w-auto max-h-8 md:max-h-10 object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300 filter brightness-100"
-                          loading="lazy"
-                        />
-                      </div>
-                    ))}
-                  </StaggerChildren>
-                </FadeIn>
-              </section>
+                    <Image
+                      src={partner.url || "/placeholder.svg"}
+                      alt={partner.alt}
+                      width={160}
+                      height={90}
+                      className="w-auto max-h-8 md:max-h-10 object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300 filter brightness-100"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </StaggerChildren>
+            </FadeIn>
+          </section>
 
-              {/* Transparent Partner Logos Grid */}
-              <section className="container py-8 px-4 sm:px-6">
-                <FadeIn className="mb-12">
-                  <h2 className="text-2xl font-bold text-center mb-6">Ecossistema Completo</h2>
-                  <p className="mx-auto max-w-[42rem] text-center text-muted-foreground">
-                    Nossa rede completa de parceiros multiplica o alcance das soluções Spinova, levando inovação e
-                    transformação digital para organizações em diversos setores e mercados.
-                  </p>
-                </FadeIn>
+          {/* Transparent Partner Logos Grid */}
+          <section className="container py-8 px-4 sm:px-6">
+            <FadeIn className="mb-12">
+              <h2 className="text-2xl font-bold text-center mb-6">Rede de Transformação</h2>
+              <p className="mx-auto max-w-[42rem] text-center text-muted-foreground">
+                Através dos nossos parceiros estratégicos, levamos inovação e soluções tecnológicas para dezenas de
+                organizações adicionais. Esta rede ampliada demonstra como nossas metodologias e expertise se
+                multiplicam, criando um ecossistema de transformação digital que vai além das fronteiras diretas da
+                Spinova.
+              </p>
+            </FadeIn>
 
-                <StaggerChildren
-                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6 max-w-7xl mx-auto"
-                  staggerDelay={80}
+            <StaggerChildren
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6 max-w-7xl mx-auto"
+              staggerDelay={80}
+            >
+              {partnerLogos.map((logo, index) => (
+                <div
+                  key={logo.name}
+                  className="aspect-[16/9] flex items-center justify-center p-3 md:p-4 rounded-lg bg-transparent border border-white/8 backdrop-blur-sm hover:border-white/16 hover:bg-white/2 transition-all duration-300 group"
                 >
-                  {partnerLogos.map((logo, index) => (
-                    <div
-                      key={logo.name}
-                      className="aspect-[16/9] flex items-center justify-center p-3 md:p-4 rounded-lg bg-transparent border border-white/8 backdrop-blur-sm hover:border-white/16 hover:bg-white/2 transition-all duration-300 group"
-                    >
-                      <Image
-                        src={logo.url || "/placeholder.svg"}
-                        alt={logo.alt}
-                        width={160}
-                        height={90}
-                        className="w-auto max-h-10 md:max-h-12 object-contain opacity-75 group-hover:opacity-95 transition-opacity duration-300 filter brightness-100"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-                </StaggerChildren>
-              </section>
+                  <Image
+                    src={logo.url || "/placeholder.svg"}
+                    alt={logo.alt}
+                    width={160}
+                    height={90}
+                    className="w-auto max-h-10 md:max-h-12 object-contain opacity-75 group-hover:opacity-95 transition-opacity duration-300 filter brightness-100"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </StaggerChildren>
+          </section>
 
-              {/* Back to Home */}
-              <section className="container py-16 px-4 sm:px-6">
-                <FadeIn className="flex justify-center">
-                  <Link
-                    href="/"
-                    className="group inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
-                    onClick={() => {
-                      // Ensure we navigate to home page and then scroll to top
-                      window.location.href = "/"
-                    }}
-                  >
-                    <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform duration-300" />
-                    {t("partnersPage.backToHome", language as any)}
-                  </Link>
-                </FadeIn>
-              </section>
-            </main>
-            <Footer />
-            <ScrollToTop />
-          </div>
-        </div>
-      </MobileMenuProvider>
-    </ActiveSectionProvider>
+          {/* Back to Home */}
+          <section className="container py-16 px-4 sm:px-6">
+            <FadeIn className="flex justify-center">
+              <Link
+                href="/"
+                className="group inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform duration-300" />
+                {t("partnersPage.backToHome", language as any)}
+              </Link>
+            </FadeIn>
+          </section>
+        </main>
+      </div>
+    </div>
   )
 }
