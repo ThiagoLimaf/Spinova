@@ -21,7 +21,7 @@ const getNavItems = (language: string) => [
   { href: "#pilares", label: t("nav.pillars", language as any) },
   { href: "#como-atuamos", label: t("nav.howWeWork", language as any) },
   { href: "#beneficios", label: t("nav.benefits", language as any) },
-  { href: "#clientes", label: t("nav.partners", language as any) },
+  { href: "/partners", label: t("nav.partnersPage", language as any), isPage: true },
   { href: "#contato", label: t("nav.contact", language as any), mobileOnly: true },
 ]
 
@@ -149,6 +149,15 @@ export default function Navbar() {
 
   const handleNavClick = (section: string, href: string) => {
     trackEvent("navigation_click", { section })
+
+    // Check if we're on the home page
+    const isHomePage = window.location.pathname === "/"
+
+    // If we're not on the home page and trying to navigate to a section, go to home first
+    if (!isHomePage && href.startsWith("#")) {
+      window.location.href = `/${href}`
+      return
+    }
 
     // Extract the section ID from the href
     const sectionId = href.startsWith("#") ? href.substring(1) : href
@@ -284,35 +293,59 @@ export default function Navbar() {
           data-nav-desktop
         >
           {navItems
-            .filter((item) => !item.mobileOnly) // Exclude mobile-only items
+            .filter((item) => !item.mobileOnly)
             .map((item, index) => {
-              const isActive = activeSection === item.href.substring(1)
+              const isActive = item.isPage
+                ? window.location.pathname === item.href
+                : activeSection === item.href.substring(1)
+
               return (
                 <FadeIn key={item.href} delay={100 + index * 100} duration="fast">
-                  <a
-                    href={item.href}
-                    className={cn(
-                      "transition-all duration-300 hover:text-primary relative py-1 px-1 group",
-                      isActive ? "text-primary font-semibold" : "text-foreground/80",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
-                      "active:scale-95",
-                    )}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      handleNavClick(item.href.substring(1), item.href)
-                    }}
-                    aria-current={isActive ? "page" : undefined}
-                    data-nav-item
-                  >
-                    {item.label}
-                    {/* Enhanced active indicator with smoother animation */}
-                    <span
+                  {item.isPage ? (
+                    <Link
+                      href={item.href}
                       className={cn(
-                        "absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full transition-all duration-300",
-                        isActive ? "opacity-100 w-full" : "opacity-0 w-0 group-hover:w-1/2 group-hover:opacity-50",
+                        "transition-all duration-300 hover:text-primary relative py-1 px-1 group",
+                        isActive ? "text-primary font-semibold" : "text-foreground/80",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                        "active:scale-95",
                       )}
-                    />
-                  </a>
+                      aria-current={isActive ? "page" : undefined}
+                      data-nav-item
+                    >
+                      {item.label}
+                      <span
+                        className={cn(
+                          "absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full transition-all duration-300",
+                          isActive ? "opacity-100 w-full" : "opacity-0 w-0 group-hover:w-1/2 group-hover:opacity-50",
+                        )}
+                      />
+                    </Link>
+                  ) : (
+                    <a
+                      href={item.href}
+                      className={cn(
+                        "transition-all duration-300 hover:text-primary relative py-1 px-1 group",
+                        isActive ? "text-primary font-semibold" : "text-foreground/80",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                        "active:scale-95",
+                      )}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        handleNavClick(item.href.substring(1), item.href)
+                      }}
+                      aria-current={isActive ? "page" : undefined}
+                      data-nav-item
+                    >
+                      {item.label}
+                      <span
+                        className={cn(
+                          "absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full transition-all duration-300",
+                          isActive ? "opacity-100 w-full" : "opacity-0 w-0 group-hover:w-1/2 group-hover:opacity-50",
+                        )}
+                      />
+                    </a>
+                  )}
                 </FadeIn>
               )
             })}

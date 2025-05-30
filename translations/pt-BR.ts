@@ -5,6 +5,7 @@ export const ptBR = {
     benefits: "Benefícios",
     clients: "Clientes",
     partners: "Parceiros",
+    partnersPage: "Parceiros",
     contact: "Contato",
     about: "Sobre Nós",
     blog: "Blog",
