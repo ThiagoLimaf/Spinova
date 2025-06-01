@@ -150,12 +150,14 @@ export default function Navbar() {
   const handleNavClick = (section: string, href: string) => {
     trackEvent("navigation_click", { section })
 
-    // Check if we're on the home page
-    const isHomePage = window.location.pathname === "/"
+    // Check if we're on the home page (only on client side)
+    const isHomePage = typeof window !== "undefined" ? window.location.pathname === "/" : true
 
     // If we're not on the home page and trying to navigate to a section, go to home first
     if (!isHomePage && href.startsWith("#")) {
-      window.location.href = `/${href}`
+      if (typeof window !== "undefined") {
+        window.location.href = `/${href}`
+      }
       return
     }
 
@@ -196,7 +198,7 @@ export default function Navbar() {
           scrollToSection(sectionId)
         }
       },
-      window.innerWidth < 768 ? 300 : 0,
+      typeof window !== "undefined" && window.innerWidth < 768 ? 300 : 0,
     )
   }
 
@@ -296,7 +298,9 @@ export default function Navbar() {
             .filter((item) => !item.mobileOnly)
             .map((item, index) => {
               const isActive = item.isPage
-                ? window.location.pathname === item.href
+                ? typeof window !== "undefined"
+                  ? window.location.pathname === item.href
+                  : false
                 : activeSection === item.href.substring(1)
 
               return (
