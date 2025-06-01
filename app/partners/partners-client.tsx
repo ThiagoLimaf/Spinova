@@ -181,7 +181,7 @@ export default function PartnersClient() {
               {/* Transparent Partner Logos Grid */}
               <section className="container py-8 px-4 sm:px-6">
                 <FadeIn className="mb-12">
-                  <h2 className="text-2xl font-bold text-center mb-6">Ecossistema Completo</h2>
+                  <h2 className="text-2xl font-bold text-center mb-6">Rede de Transformação</h2>
                   <p className="mx-auto max-w-[42rem] text-center text-muted-foreground">
                     Nossa rede completa de parceiros multiplica o alcance das soluções Spinova, levando inovação e
                     transformação digital para organizações em diversos setores e mercados.
