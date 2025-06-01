@@ -111,6 +111,24 @@ export default function ComoAtuamosSection() {
             </TabsContent>
           ))}
         </Tabs>
+
+        {/* Add translatable CTA section */}
+        <FadeIn className="text-center mt-16">
+          <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-8 md:p-12 border border-primary/10">
+            <h3 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">
+              {t("howWeWork.cta.title", language as any)}
+            </h3>
+            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto text-lg">
+              {t("howWeWork.cta.description", language as any)}
+            </p>
+            <a
+              href="#contato"
+              className="inline-flex items-center justify-center rounded-md bg-primary px-8 py-4 text-base font-medium text-primary-foreground shadow-lg transition-all duration-300 hover:bg-primary/90 hover:shadow-xl hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+            >
+              {t("howWeWork.cta.button", language as any)}
+            </a>
+          </div>
+        </FadeIn>
       </div>
     </section>
   )

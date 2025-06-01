@@ -5,6 +5,7 @@ export const ptBR = {
     benefits: "Benefícios",
     clients: "Clientes",
     partners: "Parceiros",
+    partnersPage: "Parceiros",
     contact: "Contato",
     about: "Sobre Nós",
     blog: "Blog",
@@ -73,6 +74,12 @@ export const ptBR = {
   howWeWork: {
     title: "Como Atuamos",
     subtitle: "Conheça nossas abordagens especializadas para transformar desafios em oportunidades",
+    cta: {
+      title: "Pronto para transformar seu negócio?",
+      description:
+        "Entre em contato conosco e descubra como podemos impulsionar sua empresa através de soluções inovadoras e estratégicas.",
+      button: "Entre em contato",
+    },
     categories: {
       software: {
         title: "Technology Strategy & Orchestration",

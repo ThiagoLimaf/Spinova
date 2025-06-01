@@ -4,7 +4,8 @@ export const en = {
     pillars: "Pillars",
     benefits: "Benefits",
     clients: "Clients",
-    partners: "Partners", // Change from "Experience" to "Partners"
+    partners: "Partners",
+    partnersPage: "Partners", // Add this new translation
     contact: "Contact",
     about: "About Us",
     blog: "Blog",
@@ -73,6 +74,11 @@ export const en = {
   howWeWork: {
     title: "How We Work",
     subtitle: "Discover our specialized approaches to transform challenges into opportunities",
+    cta: {
+      title: "Ready to transform your business?",
+      description: "Contact us and discover how we can drive your company through innovative and strategic solutions.",
+      button: "Get in touch",
+    },
     categories: {
       software: {
         title: "Technology Strategy & Orchestration",
